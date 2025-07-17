@@ -38,20 +38,4 @@ app.listen(port, '0.0.0.0', () => {
       console.error("❌ Impossible de se connecter à la base de données :", error);
     }
   );
-
-
-  // // Test direct au démarrage du serveur (sans faire de requête HTTP) à supprimer quand il y aura le front
-  // (async () => {
-  //   try {
-  //     console.log("🚀 Test fetch Flowise au démarrage...");
-  //     const testData = { question: "Hey, how are you?" };
-  //     const responseData = await query(testData);
-  //     const parsedText = JSON.parse(responseData.text);
-  //     console.log("Test énigme au démarrage:", parsedText.enigme);
-  //     console.log("Test indice au démarrage:", parsedText.indice);
-  //     console.log("Test réponse au démarrage:", parsedText.reponse);
-  //   } catch (error) {
-  //     console.error("Erreur lors du test fetch au démarrage :", error);
-  //   }
-  // })();
 });

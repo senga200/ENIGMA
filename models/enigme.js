@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   return sequelize.define("Enigme", {
-    question: {
+    enigme: { 
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -11,6 +11,10 @@ export default (sequelize, DataTypes) => {
     reponse: {
       type: DataTypes.TEXT,
       allowNull: true,
+    },
+    date: { 
+      type: DataTypes.DATEONLY,
+      allowNull: false,
     },
   });
 };
