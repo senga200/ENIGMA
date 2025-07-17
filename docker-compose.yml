@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: pg-enigma
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: enigma
+      POSTGRES_DB: enigma
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./pgdata-enigma:/var/lib/postgresql/data
