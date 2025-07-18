@@ -10,14 +10,14 @@ import {
     getUserByEmail,
     updateUserRole,
     getUsersByRole,
-    //getCurrentUser
+    getCurrentUser
 } from '../controllers/userController.js';
 
 const router = express.Router();
 
 router.post('/', postUser);
 router.get('/all', getAllUsers);
-//router.get('/current', getCurrentUser);
+router.get('/current', getCurrentUser);
 router.get('/email', getUserByEmail);
 router.get('/:id', getUser);
 router.put('/:id', updateUser);

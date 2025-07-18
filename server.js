@@ -6,18 +6,20 @@ import { generateEnigmeForCron } from './controllers/enigmeController.js';
 import { sequelize } from './models/index.js';
 import routeEnigmes from './routes/routeEnigmes.js';
 import routeUser from './routes/routeUser.js';
+import routeAuth from './routes/routeAuth.js';
 import cookieParser from 'cookie-parser';
 
 dotenv.config({ override: true });
 
 const app = express();
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use('/enigmes', routeEnigmes);
 app.use('/users', routeUser);
+app.use('/auth', routeAuth);
 const port = process.env.PORT || 3003;
 
-app.use(cookieParser());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

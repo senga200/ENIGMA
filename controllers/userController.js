@@ -1,6 +1,6 @@
 import { User } from '../models/index.js';
 import bcrypt from "bcrypt";
-//import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 export const postUser = async (req, res) => {
   try {
@@ -51,33 +51,33 @@ export const getAllUsers = async (req, res) => {
   }
 }
 
-// export const getCurrentUser = async (req, res) => {
-//   try {
-//     const token = req.cookies.token; // Récupérer le token du cookie
+export const getCurrentUser = async (req, res) => {
+  try {
+    const token = req.cookies.token; // Récupérer le token du cookie
 
-//     if (!token) {
-//       return res.status(401).json({ message: 'Non autorisé' });
-//     }
+    if (!token) {
+      return res.status(401).json({ message: 'Non autorisé' });
+    }
 
-//     // Vérifier le token
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    // Vérifier le token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-//     // Trouver l'utilisateur par ID
-//     const user = await User.findByPk(decoded.userId, {
-//       attributes: { exclude: ['password'] } // Exclure le mot de passe des résultats
-//     });
+    // Trouver l'utilisateur par ID
+    const user = await User.findByPk(decoded.userId, {
+      attributes: { exclude: ['password'] } // Exclure le mot de passe des résultats
+    });
 
-//     if (!user) {
-//       return res.status(404).json({ message: 'Utilisateur non trouvé' });
-//     }
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
 
-//     res.status(200).json(user);
+    res.status(200).json(user);
 
-//   } catch (error) {
-//     console.error('Erreur getCurrentUser :', error);
-//     res.status(500).json({ message: 'Erreur serveur' });
-//   }
-// }
+  } catch (error) {
+    console.error('Erreur getCurrentUser :', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+}
 
 export const getUser = async (req, res) => {
   try {
