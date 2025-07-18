@@ -45,4 +45,71 @@ export async function generateAndSaveEnigme(req, res) {
   }
 }
 
+export async function getEnigmeDuJour(req, res) {
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const enigmeDuJour = await Enigme.findOne({
+      where: { date: today },
+    });
+
+    if (!enigmeDuJour) {
+      return res.status(404).json({ error: "Aucune énigme trouvée pour aujourd'hui" });
+    }
+
+    res.status(200).json(enigmeDuJour);
+  } catch (error) {
+    console.error("Erreur récupération énigme du jour:", error);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+}
+
+export async function getAllEnigmes(req, res) {
+  try {
+    const enigmes = await Enigme.findAll();
+    res.status(200).json(enigmes);
+  } catch (error) {
+    console.error("Erreur récupération de toutes les énigmes:", error);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+}
+
+export async function updateEnigme(req, res) {
+  const { id } = req.params;
+  const { enigme, indice, reponse } = req.body;
+
+  try {
+    const updatedEnigme = await Enigme.update(
+      { enigme, indice, reponse },
+      { where: { id } }
+    );
+
+    if (updatedEnigme[0] === 0) {
+      return res.status(404).json({ error: "Énigme non trouvée" });
+    }
+
+    res.status(200).json({ message: "Énigme mise à jour avec succès" });
+  } catch (error) {
+    console.error("Erreur mise à jour énigme:", error);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+}
+
+export async function deleteEnigme(req, res) {
+  const { id } = req.params;
+
+  try {
+    const deletedCount = await Enigme.destroy({ where: { id } });
+
+    if (deletedCount === 0) {
+      return res.status(404).json({ error: "Énigme non trouvée" });
+    }
+
+    res.status(200).json({ message: "Énigme supprimée avec succès" });
+  } catch (error) {
+    console.error("Erreur suppression énigme:", error);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+}
+
+
 

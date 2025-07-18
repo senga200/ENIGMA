@@ -1,9 +1,10 @@
 import express from 'express';
 import {
   generateAndSaveEnigme,
- // getEnigmeDuJour,
- // updateEnigme,
- // deleteEnigme,
+  getEnigmeDuJour,
+  getAllEnigmes,
+  updateEnigme,
+  deleteEnigme,
 } from '../controllers/enigmeController.js';
 
 const router = express.Router();
@@ -11,9 +12,10 @@ const router = express.Router();
 
 // Routes CRUD Enigme
 router.post('/generate', generateAndSaveEnigme);
-//router.get('/enigmes/today', getEnigmeDuJour);
-//router.put('/enigmes/:id', updateEnigme);
-//router.delete('/enigmes/:id', deleteEnigme);
+router.get('/today', getEnigmeDuJour);
+router.get('/all', getAllEnigmes);
+router.put('/:id', updateEnigme);
+router.delete('/:id', deleteEnigme);
 
 
 router.get('/', (req, res) => {
