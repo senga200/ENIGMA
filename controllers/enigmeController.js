@@ -18,27 +18,42 @@ async function query(data) {
   return result;
 }
 
-export async function generateAndSaveEnigme(req, res) {
+// Fonction pour le cron (sans req/res)
+export async function generateEnigmeForCron() {
   try {
-     console.log('Début de generateAndSaveEnigme');
     console.log('FLOWISE_ENIGME_ID:', FLOWISE_ENIGME_ID);
     const dataToSend = { question: "Hey, quelle est l enigme du jour ?" };
-        console.log('Données envoyées:', dataToSend);
+    console.log('Données envoyées:', dataToSend);
+    
     const responseData = await query(dataToSend);
-     console.log('Réponse reçue:', responseData);
+    console.log('Réponse reçue:', responseData);
+    
     const parsedText = JSON.parse(responseData.text);
     console.log('Texte analysé:', parsedText);
 
     const today = new Date().toISOString().split('T')[0];
-        console.log('Date du jour:', today);
+    console.log(' Date du jour:', today);
+    
     const newEnigme = await Enigme.create({
       enigme: parsedText.enigme,
       indice: parsedText.indice,
       reponse: parsedText.reponse,
       date: today,
     });
+    
+    console.log('🔍 Enigme créée:', newEnigme);
+    return newEnigme;
+  } catch (error) {
+    console.error("❌ Erreur génération énigme cron:", error);
+    throw error;
+  }
+}
 
-    res.status(201).json(newEnigme);
+// Fonction pour la route HTTP (avec req/res)
+export async function generateAndSaveEnigme(req, res) {
+  try {
+    const result = await generateEnigmeForCron();
+    res.status(201).json(result);
   } catch (error) {
     console.error("Erreur génération + sauvegarde énigme:", error);
     res.status(500).json({ error: "Erreur serveur" });

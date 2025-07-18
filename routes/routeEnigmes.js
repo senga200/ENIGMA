@@ -10,7 +10,6 @@ import {
 const router = express.Router();
 
 
-// Routes CRUD Enigme
 router.post('/generate', generateAndSaveEnigme);
 router.get('/today', getEnigmeDuJour);
 router.get('/all', getAllEnigmes);

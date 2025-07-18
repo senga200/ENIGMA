@@ -1,6 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import cron from 'node-cron';
+//import { Enigme } from './models/Enigme.js'; // Assuming you have a model named Enigme
+import { generateEnigmeForCron } from './controllers/enigmeController.js';
 import { sequelize } from './models/index.js';
 import routeEnigmes from './routes/routeEnigmes.js';
 
@@ -38,4 +41,19 @@ app.listen(port, '0.0.0.0', () => {
       console.error("❌ Impossible de se connecter à la base de données :", error);
     }
   );
+});
+
+
+// Cron job pour générer une énigme chaque jour à minuit
+cron.schedule('1 0 * * *', async () => {
+  console.log('🕐 Génération automatique d\'énigme - ', new Date().toISOString());
+  try {
+    await generateEnigmeForCron();
+    console.log('✅ Énigme générée et sauvegardée avec succès');
+  } catch (error) {
+    console.error('❌ Erreur lors de la génération automatique:', error);
+  }
+}, {
+  scheduled: true,
+  timezone: "Europe/Paris"
 });
