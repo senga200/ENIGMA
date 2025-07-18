@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 import defineEnigme from './enigme.js';
+import defineUser from './user.js';
 
 dotenv.config();
 
@@ -16,5 +17,6 @@ const sequelize = new Sequelize(
 );
 
 const Enigme = defineEnigme(sequelize, Sequelize.DataTypes);
+const User = defineUser(sequelize, Sequelize.DataTypes);
 
-export { sequelize, Enigme };
+export { sequelize, Enigme, User };
