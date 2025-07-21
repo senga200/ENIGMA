@@ -25,8 +25,6 @@ function EnigmeDuJour() {
     <div>
       <p>Voici l'énigme du jour :</p>
       <h3>{enigme.enigme}</h3>
-
-      {/* 🔮 Affiche la carte magique avec l'indice */}
       <MagicIndiceCard indice={enigme.indice} />
 
       <p>Date de l'énigme : {enigme.date ? new Date(enigme.date).toLocaleDateString() : 'Inconnue'}</p>
