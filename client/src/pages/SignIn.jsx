@@ -7,10 +7,9 @@ function SignIn() {
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [loading, setLoading] = useState(false);
-
-
     const navigate = useNavigate();
-  const { login } = useUser(); //  ici qu’on accède à login depuis le contexte
+    const { login } = useUser(); // login depuis le contexte
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);

@@ -29,6 +29,10 @@ function EnigmeDeHier() {
       <p className="enigme-text">{enigme.enigme}</p>
       <p className="enigme-reponse">💡 Réponse : <span>{enigme.reponse}</span></p>
       <p className="enigme-date">📅 {new Date(enigme.date).toLocaleDateString()}</p>
+      <span className='favroris'>
+ <p>       ajoutez cette énigme à vos <a href="/favoris">favoris</a> pour la retrouver plus tard !</p>
+      <span className='emoji'>✨</span>
+      </span>
     </div>
   );
 }
