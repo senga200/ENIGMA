@@ -1,0 +1,136 @@
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.card {
+  width: 350px;
+  height: 120px;
+  cursor: pointer;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+  animation-delay: calc(var(--delay, 0) * 1s); 
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s ease-in-out;
+  transform-style: preserve-3d;
+  position: relative;
+  /* Par défaut, on montre la face avant */
+  transform: rotateY(0deg);
+}
+
+/* Quand la carte est retournée */
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
+}
+
+.card-front {
+  /* Face avant visible par défaut */
+  transform: rotateY(0deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-back {
+  /* Face arrière cachée par défaut */
+  transform: rotateY(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-pattern {
+  width: 100%;
+  height: 100%;
+  background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+  background-color: #1a1a2e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffffaa;
+  font-size: 1.1rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.card-content {
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+}
+
+.fortune-text {
+  font-size: 1.2rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: #ffeaa7;
+  margin: 0;
+}
+
+.click-to-reveal {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px #ffffff;
+  margin: 0;
+}
+
+.glow {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover .glow {
+  opacity: 1;
+}
+
+
+/* Effet lumineux au survol des faces */
+.card:hover .card-front{
+  box-shadow: 
+    0 0 15px #a29bfe,
+    0 0 30px #6c5ce7,
+    0 0 45px #a29bfe;
+  transition: box-shadow 0.4s ease-in-out;
+  transform: scale(1.02);
+}
+
+
+/* Particules magiques whow */
+.particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 3px #fff;
+  pointer-events: none;
+  transition: transform 1s ease-out, opacity 1s ease-out;
+  z-index: 9999;
+}

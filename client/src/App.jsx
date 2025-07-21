@@ -7,7 +7,6 @@ function App() {
 
   return (
     <Router>
-<h1>HELLO ENIGMA</h1>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />

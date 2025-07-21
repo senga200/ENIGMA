@@ -51,7 +51,6 @@ app.listen(port, '0.0.0.0', () => {
   );
 });
 
-
 // Cron job pour générer une énigme chaque jour à minuit
 cron.schedule('1 0 * * *', async () => {
   console.log('🕐 Génération automatique d\'énigme - ', new Date().toISOString());
