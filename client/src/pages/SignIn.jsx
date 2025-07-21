@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../utils/UserContext';
 
 function SignIn() {
     const [username, setUsername] = useState('');
@@ -6,6 +8,9 @@ function SignIn() {
     const [errorMsg, setErrorMsg] = useState('');
     const [loading, setLoading] = useState(false);
 
+
+    const navigate = useNavigate();
+  const { login } = useUser(); //  ici qu’on accède à login depuis le contexte
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -25,6 +30,10 @@ function SignIn() {
 
             const data = await response.json();
             console.log('Connexion réussie:', data);
+            login(data); // Stocke dans le contexte
+            setUsername('');
+            setPassword('');
+            navigate('/'); 
         } catch (error) {
             setErrorMsg(error.message);
         }
@@ -60,6 +69,10 @@ function SignIn() {
                 </button>
                 {errorMsg && <p className="error">{errorMsg}</p>}
             </form>
+
+            <p>Pas encore inscrit ? <a href="/signup">Créer un compte</a></p>
+            <p>Mot de passe oublié ? <a href="/reset-password">Réinitialiser</a></p>
+            <p>Retour à la <a href="/">page d'accueil</a></p>
         </div>
     );
 }

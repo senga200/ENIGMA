@@ -46,3 +46,36 @@ export const authUser = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 };
+
+
+export const getMe = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ message: 'Non authentifié' });
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const user = await User.findByPk(decoded.userId);
+
+    if (!user) return res.status(404).json({ message: 'Utilisateur non trouvé' });
+
+    res.status(200).json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    });
+  } catch (error) {
+    console.error('Erreur getMe :', error);
+    res.status(401).json({ message: 'Session invalide ou expirée' });
+  }
+};
+
+
+export const logout = (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'Strict',
+  });
+  res.status(200).json({ message: 'Déconnecté avec succès' });
+};
