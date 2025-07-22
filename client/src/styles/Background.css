@@ -1,0 +1,83 @@
+@keyframes blink-animation {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes smoothBg {
+  from {
+    background-position: 50% 20%, 50% 20%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
+.wrapper {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.hero {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+
+
+  --stripes: repeating-linear-gradient(
+    100deg,
+    var(--stripe-color) 0%,
+    var(--stripe-color) 7%,
+    transparent 10%,
+    transparent 12%,
+    var(--stripe-color) 16%
+  );
+
+  --rainbow: repeating-linear-gradient(
+    130deg,
+    #2a5181 10%,
+    #905699 15%,
+    #79b5ff 20%,
+    #3b8b7f 25%,
+    rgb(104, 49, 150) 70%
+  );
+
+  background-image: var(--stripes), var(--rainbow);
+  background-size: 300%, 200%;
+  background-position: 50% 50%, 50% 50%;
+  filter: blur(10px);
+  mask-image: radial-gradient(ellipse at 100% 0%, black 40%, transparent 70%);
+  animation: smoothBg 120s linear infinite;
+  background-attachment: fixed;
+  mix-blend-mode: difference;
+}
+
+
+.content-switch {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+#switch {
+  opacity: 0;
+  position: absolute;
+}
+
+label[for="switch"] {
+  cursor: pointer;
+  padding: 0.5rem;
+  user-select: none;
+}
+
+label[for="switch"] .icon {
+  animation: blink-animation 2s ease-in-out infinite;
+}
+
+
