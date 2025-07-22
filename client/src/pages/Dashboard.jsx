@@ -1,11 +1,14 @@
+
+import FavorisList from "../components/FavorisList";
+
 function Dashboard() {
   return (
     <div className="container">
-
+      <h1>Tableau de bord</h1>
       <section>
         <h2>⭐ Enigmes favorites</h2>
-        <p>Tu n'as pas encore d'énigmes favorites.</p>
         <p>Découvre les énigmes du jour et ajoute-les à tes favorites !</p>
+      <FavorisList />
       </section>
 
       <section>
