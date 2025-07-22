@@ -7,6 +7,7 @@ import { sequelize } from './models/index.js';
 import routeEnigmes from './routes/routeEnigmes.js';
 import routeUser from './routes/routeUser.js';
 import routeAuth from './routes/routeAuth.js';
+import routeFavoris from './routes/routeFavoris.js';
 import cookieParser from 'cookie-parser';
 
 dotenv.config({ override: true });
@@ -21,6 +22,8 @@ app.use(express.json());
 app.use('/enigmes', routeEnigmes);
 app.use('/users', routeUser);
 app.use('/auth', routeAuth);
+app.use('/favoris', routeFavoris);
+
 const port = process.env.PORT || 3003;
 
 

@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 import defineEnigme from './enigme.js';
 import defineUser from './user.js';
+import defineFavori from './favori.js';
 
 dotenv.config();
 
@@ -18,5 +19,25 @@ const sequelize = new Sequelize(
 
 const Enigme = defineEnigme(sequelize, Sequelize.DataTypes);
 const User = defineUser(sequelize, Sequelize.DataTypes);
+const Favori = defineFavori(sequelize, Sequelize.DataTypes);
 
-export { sequelize, Enigme, User };
+
+
+// Associations
+User.belongsToMany(Enigme, {
+  through: Favori,
+  foreignKey: 'userId',
+  otherKey: 'enigmeId',
+});
+Enigme.belongsToMany(User, {
+  through: Favori,
+  foreignKey: 'enigmeId',
+  otherKey: 'userId',
+});
+
+
+// Associations directes nécessaires pour l'include via Favori
+Favori.belongsTo(Enigme, { foreignKey: 'enigmeId' });
+Favori.belongsTo(User, { foreignKey: 'userId' });
+
+export { sequelize, Enigme, User, Favori };

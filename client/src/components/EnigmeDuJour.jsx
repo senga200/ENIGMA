@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getEnigmes } from '../utils/GetEnigmes';
 import MagicIndiceCard from './MagicIndiceCard';
+import HeartFavori from './HeartFavori';
 
 function EnigmeDuJour() {
   const [enigme, setEnigme] = useState(null);
@@ -42,6 +43,7 @@ function EnigmeDuJour() {
 
       <p>Date de l'énigme : {enigme.date ? new Date(enigme.date).toLocaleDateString() : 'Inconnue'}</p>
     </div>
+      <HeartFavori />
     <div className="share">
       <p>Partagez cette énigme :</p>
         <a
