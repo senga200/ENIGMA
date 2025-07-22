@@ -1,15 +1,20 @@
 
-import FavorisList from "../components/FavorisList";
-//import '../styles/Dashboard.css';
+import FavorisList from "../components/FavorisList"; 
+import React, { useEffect, useState } from 'react';
+import '../styles/Dashboard.css';
 
 
 function Dashboard() {
   return (
     <div className="container">
-      <h1>Tableau de bord</h1>
+      <h1>Mes Favoris</h1>
       <section>
+                  <div className="enigme-container">
+
+
         <h2>⭐ Enigmes favorites</h2>
       <FavorisList />
+                  </div>
       </section>
 
       <section>

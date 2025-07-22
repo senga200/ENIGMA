@@ -1,32 +1,157 @@
-.navbar {
-  background-color: #1f1f1f;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
+/* Variables globales */
+:root {
+  --tab-color: #191919;
+  --white-color: #fff;
+  --home-icon-color: #00f7ff;
+  --heart-icon-color: #ff0000;
+  --switch-icon-color: #adff2f;
+  --user-icon-color: #ee82ee;
+  --bell-icon-color: #ffff00;
 }
 
-.navbar ul {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
+/* Reset de base */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  list-style: none;
 }
 
-.navbar li {
-  color: #fff;
+/* Navigation principale */
+.nav {
+  background-color: var(--tab-color);
+  margin-top: 10rem;
+  height: 6em;
+  border-radius: 2em;
+  padding: 0 2em;
+  box-shadow: 0 1em 1em rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.navbar a {
-  color: #a29bfe;
-  text-decoration: none;
-  font-weight: bold;
+/* Liste de liens */
+.nav__links {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.navbar button {
-  background: none;
-  border: none;
-  color: #ff7675;
+/* Lien individuel */
+.nav__link {
   cursor: pointer;
-  font-weight: bold;
+  transition: opacity 0.3s ease;
+}
+
+.nav__link a {
+  color: var(--white-color);
+  font-size: 2.5rem;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+/* Styles pour le switch */
+.nav__link input[type="checkbox"] {
+  display: none;
+}
+
+.nav__link label {
+  cursor: pointer;
+  color: var(--white-color);
+  font-size: 2.5rem;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+/* Actif */
+.nav__link.active a {
+  opacity: 1;
+}
+
+.nav__link.active label {
+  opacity: 1;
+}
+
+.nav__link.active a .bx-home-alt-2 {
+  color: var(--home-icon-color);
+  text-shadow: 0 0 15px var(--home-icon-color),
+               0 0 30px var(--home-icon-color),
+               0 0 45px var(--home-icon-color),
+               0 0 60px var(--home-icon-color);
+}
+
+.nav__link.active a .bx-heart {
+  color: var(--heart-icon-color);
+  text-shadow: 0 0 15px var(--heart-icon-color),
+               0 0 30px var(--heart-icon-color),
+               0 0 45px var(--heart-icon-color),
+               0 0 60px var(--heart-icon-color);
+}
+
+/* Switch actif */
+.nav__link.active label .bx-night-light {
+  color: var(--switch-icon-color);
+  text-shadow: 0 0 15px var(--switch-icon-color),
+               0 0 30px var(--switch-icon-color),
+               0 0 45px var(--switch-icon-color),
+               0 0 60px var(--switch-icon-color);
+}
+
+.nav__link.active a .bx-user {
+  color: var(--user-icon-color);
+  text-shadow: 0 0 15px var(--user-icon-color),
+               0 0 30px var(--user-icon-color),
+               0 0 45px var(--user-icon-color),
+               0 0 60px var(--user-icon-color);
+}
+
+.nav__link.active a .bx-log-out {
+  color: var(--bell-icon-color);
+  text-shadow: 0 0 15px var(--bell-icon-color),
+               0 0 30px var(--bell-icon-color),
+               0 0 45px var(--bell-icon-color),
+               0 0 60px var(--bell-icon-color);
+}
+
+.nav__link.active a .bx-lock {
+  color: var(--user-icon-color);
+  text-shadow: 0 0 15px var(--user-icon-color),
+               0 0 30px var(--user-icon-color),
+               0 0 45px var(--user-icon-color),
+               0 0 60px var(--user-icon-color);
+}
+
+.nav__link.active a .bx-edit {
+  color: var(--switch-icon-color);
+  text-shadow: 0 0 15px var(--switch-icon-color),
+               0 0 30px var(--switch-icon-color),
+               0 0 45px var(--switch-icon-color),
+               0 0 60px var(--switch-icon-color);
+}
+
+/* Lumière active sous le lien */
+.nav__light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4em;
+  height: 0.4em;
+  border-radius: 2px;
+  background-color: var(--white-color);
+  display: flex;
+  justify-content: center;
+  transition: 0.3s ease;
+}
+
+.nav__light::before {
+  content: '';
+  width: 5em;
+  height: 7em;
+  position: absolute;
+  top: 0.4em;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) -50%, rgba(255, 255, 255, 0) 90%);
+  clip-path: polygon(30% 0, 70% 0, 100% 100%, 0% 100%);
 }
