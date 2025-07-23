@@ -4,19 +4,23 @@ import { useUser } from "../utils/UserContext";
 import "../styles/NavBar.css";
 
 function NavBar({ isSwitched, handleToggle }) {
-  const navItems = [
-    { icon: "home-outline", path: "/" },
-    { icon: "heart-outline", path: "/dashboard" },
-    { icon: "person-outline", path: "/profil" },
-    { icon: "log-out-outline", path: "/logout" },
-    { icon: "contrast-outline" } 
-  ];
 
-  const { logout } = useUser();
+  const {user, logout } = useUser();
   const navigate = useNavigate();
   const markerRef = useRef(null);
   const listRefs = useRef([]);
   const [activeIndex, setActiveIndex] = useState(2);
+
+  const navItems = [
+    { icon: "home-outline", path: "/" },
+    { icon: "heart-outline", path: "/dashboard" },
+    { icon: "person-outline", path: "/profil" },
+     {
+      icon: user ? "log-out-outline" : "lock-closed-outline",
+      path: user ? "/logout" : "/signin",
+    },
+    { icon: "contrast-outline" } 
+  ];
 
   useEffect(() => {
     const marker = markerRef.current;
