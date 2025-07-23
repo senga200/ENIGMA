@@ -1,157 +1,125 @@
-/* Variables globales */
-:root {
-  --tab-color: #191919;
-  --white-color: #fff;
-  --home-icon-color: #00f7ff;
-  --heart-icon-color: #ff0000;
-  --switch-icon-color: #adff2f;
-  --user-icon-color: #ee82ee;
-  --bell-icon-color: #ffff00;
-}
 
-/* Reset de base */
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+} */
+
+.nav-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 100vh; */
+  background: #1e2759;
+}
+
+.nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+}
+.nav ul {
+  display: flex;
+  flex-direction: row; 
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+}
+
+.nav li {
   list-style: none;
 }
 
-/* Navigation principale */
-.nav {
-  background-color: var(--tab-color);
-  margin-top: 10rem;
-  height: 6em;
-  border-radius: 2em;
-  padding: 0 2em;
-  box-shadow: 0 1em 1em rgba(0, 0, 0, 0.2);
-
-  display: flex;
-  align-items: center;
+.nav li a {
   position: relative;
-  overflow: hidden;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  padding: 20px 30px;
+  z-index: 1000;
+  backdrop-filter: blur(15px);
 }
 
-/* Liste de liens */
-.nav__links {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.nav li a ion-icon {
+  font-size: 1.5em;
+  pointer-events: none;
+  opacity: 0.25;
+  transition: 0.25s;
 }
 
-/* Lien individuel */
-.nav__link {
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-
-.nav__link a {
-  color: var(--white-color);
-  font-size: 2.5rem;
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
-}
-
-/* Styles pour le switch */
-.nav__link input[type="checkbox"] {
-  display: none;
-}
-
-.nav__link label {
-  cursor: pointer;
-  color: var(--white-color);
-  font-size: 2.5rem;
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
-}
-
-/* Actif */
-.nav__link.active a {
+.nav li.active a ion-icon {
   opacity: 1;
 }
 
-.nav__link.active label {
-  opacity: 1;
-}
-
-.nav__link.active a .bx-home-alt-2 {
-  color: var(--home-icon-color);
-  text-shadow: 0 0 15px var(--home-icon-color),
-               0 0 30px var(--home-icon-color),
-               0 0 45px var(--home-icon-color),
-               0 0 60px var(--home-icon-color);
-}
-
-.nav__link.active a .bx-heart {
-  color: var(--heart-icon-color);
-  text-shadow: 0 0 15px var(--heart-icon-color),
-               0 0 30px var(--heart-icon-color),
-               0 0 45px var(--heart-icon-color),
-               0 0 60px var(--heart-icon-color);
-}
-
-/* Switch actif */
-.nav__link.active label .bx-night-light {
-  color: var(--switch-icon-color);
-  text-shadow: 0 0 15px var(--switch-icon-color),
-               0 0 30px var(--switch-icon-color),
-               0 0 45px var(--switch-icon-color),
-               0 0 60px var(--switch-icon-color);
-}
-
-.nav__link.active a .bx-user {
-  color: var(--user-icon-color);
-  text-shadow: 0 0 15px var(--user-icon-color),
-               0 0 30px var(--user-icon-color),
-               0 0 45px var(--user-icon-color),
-               0 0 60px var(--user-icon-color);
-}
-
-.nav__link.active a .bx-log-out {
-  color: var(--bell-icon-color);
-  text-shadow: 0 0 15px var(--bell-icon-color),
-               0 0 30px var(--bell-icon-color),
-               0 0 45px var(--bell-icon-color),
-               0 0 60px var(--bell-icon-color);
-}
-
-.nav__link.active a .bx-lock {
-  color: var(--user-icon-color);
-  text-shadow: 0 0 15px var(--user-icon-color),
-               0 0 30px var(--user-icon-color),
-               0 0 45px var(--user-icon-color),
-               0 0 60px var(--user-icon-color);
-}
-
-.nav__link.active a .bx-edit {
-  color: var(--switch-icon-color);
-  text-shadow: 0 0 15px var(--switch-icon-color),
-               0 0 30px var(--switch-icon-color),
-               0 0 45px var(--switch-icon-color),
-               0 0 60px var(--switch-icon-color);
-}
-
-/* Lumière active sous le lien */
-.nav__light {
+#marker {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 4em;
-  height: 0.4em;
-  border-radius: 2px;
-  background-color: var(--white-color);
-  display: flex;
-  justify-content: center;
-  transition: 0.3s ease;
+  transition: 0.5s;
+  z-index: 1;
 }
 
-.nav__light::before {
+#marker::before {
   content: '';
-  width: 5em;
-  height: 7em;
   position: absolute;
-  top: 0.4em;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) -50%, rgba(255, 255, 255, 0) 90%);
-  clip-path: polygon(30% 0, 70% 0, 100% 100%, 0% 100%);
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 40px;
+  border-radius: 8px;
+  background: #5da6ff;
+  box-shadow: 0 0 15px #5da6ff,
+              0 0 30px #5da6ff,
+              0 0 40px #5da6ff,
+              0 0 60px #5da6ff;
 }
+
+/* Color variations based on index */
+.nav li:nth-child(1).active ~ #marker::before {
+  background: #5da6ff;
+  box-shadow: 0 0 15px #5da6ff,
+              0 0 30px #5da6ff,
+              0 0 40px #5da6ff,
+              0 0 60px #5da6ff;
+}
+.nav li:nth-child(2).active ~ #marker::before {
+  background: #ff0;
+  box-shadow: 0 0 15px #ff0,
+              0 0 30px #ff0,
+              0 0 40px #ff0,
+              0 0 60px #ff0;
+}
+.nav li:nth-child(3).active ~ #marker::before {
+  background: #df2fff;
+  box-shadow: 0 0 15px #df2fff,
+              0 0 30px #df2fff,
+              0 0 40px #df2fff,
+              0 0 60px #df2fff;
+}
+.nav li:nth-child(4).active ~ #marker::before {
+  background: #0f0;
+  box-shadow: 0 0 15px #0f0,
+              0 0 30px #0f0,
+              0 0 40px #0f0,
+              0 0 60px #0f0;
+}
+.nav li:nth-child(5).active ~ #marker::before {
+  background: #ff308f;
+  box-shadow: 0 0 15px #ff308f,
+              0 0 30px #ff308f,
+              0 0 40px #ff308f,
+              0 0 60px #ff308f;
+}
+
+
