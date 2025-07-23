@@ -1,0 +1,12 @@
+/* Particules magiques whow */
+.particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 3px #fff;
+  pointer-events: none;
+  transition: transform 1s ease-out, opacity 1s ease-out;
+  z-index: 9999;
+}

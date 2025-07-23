@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../utils/UserContext.jsx';
 import { getFavorisByUser } from '../utils/GetFavoriByUser.jsx';
-import ReponseCardDashboard from "../components/ReponseCardDashboard";
+import { deleteFavorisByUser } from '../utils/DeleteFavori.jsx';
 
-export default function FavorisList() {
+import ReponseCardDashboard from "../components/ReponseCardDashboard";
+import cookieParser from 'cookie-parser';
+
+function FavorisList() {
   const { user, loading: userLoading } = useUser();
   const [favoris, setFavoris] = useState([]);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     if (!user) return;
@@ -23,6 +27,22 @@ export default function FavorisList() {
   if (loading) return <p>Chargement favoris...</p>;
   if (!favoris.length) return <p>Pas de favoris.</p>;
 
+  const handleDelete = async (enigmeId) => {
+    const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer ce favori ?");
+    if (!confirmDelete) return;
+    if (!user) return;
+    try {
+      await deleteFavorisByUser(user.id, enigmeId);
+      setFavoris(favoris.filter(fav => fav.enigmeId !== enigmeId));
+      alert("Favori supprimé avec succès !");
+    } catch (error) {
+      console.error('Erreur lors de la suppression du favori:', error);
+    }
+  };
+
+    console.log('Favoris récupérés:', favoris);
+    console.log('date ajout favoris:', favoris.map(fav => fav.dateAdded));
+
   return (
     <ul>
       {favoris.map((fav) => (
@@ -32,11 +52,17 @@ export default function FavorisList() {
             <button onClick={() => alert(`Partage de l'énigme ${fav.enigmeId} !`)}>
             Partager l'énigme
           </button>
-          <button onClick={() => alert(`Suppression de l'énigme ${fav.enigmeId} !`)}>
-            Supprimer de mes favoris
+          <button onClick={() => handleDelete(fav.enigmeId)}>
+            Supprimer des favoris
           </button>
+          <p>Favori ajouté le : {fav.dateAdded}</p>
+          <p>Utilisateur ID : {fav.userId}</p>
+          <p>Enigme ID : {fav.enigmeId}</p>
         </li>
       ))}
     </ul>
   );
 }
+
+
+export default FavorisList;

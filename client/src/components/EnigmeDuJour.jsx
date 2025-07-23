@@ -5,6 +5,7 @@ import { getEnigmes } from '../utils/GetEnigmes';
 import MagicIndiceCard from './MagicIndiceCard';
 import HeartFavori from './HeartFavori';
 
+
 function EnigmeDuJour() {
   const [enigme, setEnigme] = useState(null);
 
@@ -33,6 +34,8 @@ function EnigmeDuJour() {
       alert('Lien copié dans le presse-papiers !');
     });
   };
+
+
 
   return (
 <div className="enigme-today-container">
