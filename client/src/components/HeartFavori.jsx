@@ -8,6 +8,8 @@ function HeartFavori({ enigmeId }) {
   const { user } = useUser();
   const [isFavori, setIsFavori] = useState(false);
   const [error, setError] = useState(null);
+
+  
   
   
   // particules whow
@@ -101,8 +103,8 @@ function HeartFavori({ enigmeId }) {
 
 return(
     <div>
-      <span className="heart" onClick={() => handleAdd(enigmeId)} >
-        {isFavori ? "❤️" : "🤍"}
+     <span className="heart" onClick={() => handleAdd(enigmeId)} >
+        {isFavori ? <span className="red"><ion-icon id="red" name="heart"></ion-icon></span> : <span className="white"> <ion-icon name="heart-outline"></ion-icon></span>}
       </span>
       {error && <p className="error">{error}</p>}
     </div>

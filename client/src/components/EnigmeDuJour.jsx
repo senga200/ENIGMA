@@ -4,10 +4,13 @@ import { useEffect, useState } from 'react';
 import { getEnigmes } from '../utils/GetEnigmes';
 import MagicIndiceCard from './MagicIndiceCard';
 import HeartFavori from './HeartFavori';
+import { useUser } from '../utils/UserContext';
+import '../styles/EnigmeCard.css';
 
 
 function EnigmeDuJour() {
   const [enigme, setEnigme] = useState(null);
+    const { user } = useUser();
 
   useEffect(() => {
     async function fetchEnigmeDuJour() {
@@ -41,12 +44,14 @@ function EnigmeDuJour() {
 <div className="enigme-today-container">
       <div className="enigme-today">
       <p>Voici l'énigme du jour :</p>
+       <span className="heart-icon">
+      <HeartFavori enigmeId={enigme.id} />
+        </span>
       <h3>{enigme.enigme}</h3>
       <MagicIndiceCard indice={enigme.indice} />
 
       <p>Date de l'énigme : {enigme.date ? new Date(enigme.date).toLocaleDateString() : 'Inconnue'}</p>
     </div>
-      <HeartFavori />
     <div className="share">
       <p>Partagez cette énigme :</p>
         <a

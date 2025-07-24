@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getEnigmes } from '../utils/GetEnigmes';
-import '../styles/EnigmeDeHier.css';
+import '../styles/EnigmeCard.css';
 import HeartFavori from './HeartFavori';
 import { useUser } from '../utils/UserContext';
 
@@ -25,10 +25,14 @@ function EnigmeDeHier() {
 
   if (!enigme) return <p className="enigme-message">Aucune énigme pour hier.</p>;
   if (!enigme.enigme || !enigme.reponse) return <p className="enigme-message">Énigme du jour indisponible.</p>;
+  console.log('Enigme de hier:', enigme);
 
   return (
     <div className="enigme-container">
       <p className="enigme-label">Hier, l'énigme était :</p>
+      <span className="heart-icon">
+      <HeartFavori enigmeId={enigme.id} />
+        </span>
       <p className="enigme-text">{enigme.enigme}</p>
       <p className="enigme-reponse">💡 Réponse : <span>{enigme.reponse}</span></p>
       <p className="enigme-date">📅 {new Date(enigme.date).toLocaleDateString()}</p>
@@ -36,7 +40,7 @@ function EnigmeDeHier() {
         {user ? (
           <>
           <p>  <a href="/dashboard">Retrouve ici tes énigmes favorites</a> !</p>
-          <HeartFavori enigmeId={enigme.id} />
+
           </>
         ) : (
           <>

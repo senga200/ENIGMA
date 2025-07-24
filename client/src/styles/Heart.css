@@ -10,3 +10,29 @@
   transition: transform 1s ease-out, opacity 1s ease-out;
   z-index: 9999;
 }
+
+.heart {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.heart:hover ion-icon {
+  transform: scale(1.2);
+  transition: transform 1s ease-in-out;
+}
+
+.heart ion-icon {
+  font-size: 34px;
+
+}
+.white ion-icon {
+  color: white;
+}
+.red {
+  color: red;
+}
+
+/* .red ion-icon {
+  color: red;
+} */

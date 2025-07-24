@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useUser } from '../utils/UserContext.jsx';
 import { getFavorisByUser } from '../utils/GetFavoriByUser.jsx';
 import { deleteFavorisByUser } from '../utils/DeleteFavori.jsx';
-
 import ReponseCardDashboard from "../components/ReponseCardDashboard";
 import cookieParser from 'cookie-parser';
 
@@ -10,6 +9,7 @@ function FavorisList() {
   const { user, loading: userLoading } = useUser();
   const [favoris, setFavoris] = useState([]);
   const [loading, setLoading] = useState(true);
+
 
 
   useEffect(() => {
@@ -41,14 +41,21 @@ function FavorisList() {
   };
 
     console.log('Favoris récupérés:', favoris);
-    console.log('date ajout favoris:', favoris.map(fav => fav.dateAdded));
+    const today = new Date().toISOString().slice(0, 10);
+    console.log('Date du jour:', today);
+
+
 
   return (
     <ul>
       {favoris.map((fav) => (
         <li key={`${fav.userId}-${fav.enigmeId}`}>
           {fav.Enigme?.enigme || "pas d'énigme disponible"}
-            <ReponseCardDashboard reponse={fav.Enigme?.reponse || "Pas de réponse disponible"} />
+<ReponseCardDashboard 
+  reponse={fav.Enigme?.reponse || "Pas de réponse disponible"} 
+  dateEnigme={fav.Enigme?.date}
+/>
+
             <button onClick={() => alert(`Partage de l'énigme ${fav.enigmeId} !`)}>
             Partager l'énigme
           </button>
@@ -56,6 +63,9 @@ function FavorisList() {
             Supprimer des favoris
           </button>
           <p>Favori ajouté le : {fav.dateAdded}</p>
+          <p>Date de l'énigme : {fav.Enigme?.date?.slice(0, 10) || "Pas de date disponible"}</p>
+      
+          
           <p>Utilisateur ID : {fav.userId}</p>
           <p>Enigme ID : {fav.enigmeId}</p>
         </li>

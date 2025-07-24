@@ -1,27 +1,38 @@
 
 import '../styles/MagicIndiceCard.css';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { getEnigmes } from '../utils/GetEnigmes';
 
-
-function ReponseCardDashboard({ reponse = "Redécouvrir la réponse..." }) {
+function ReponseCardDashboard({ reponse = "Redécouvrir la réponse...", dateEnigme }) {
   const cardRef = useRef(null);
   const glowRef = useRef(null);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [indice, setIndice] = useState(null);
 
+  const today = new Date().toISOString().slice(0, 10);
+  const isToday = dateEnigme?.slice(0, 10) === today;
+
+  useEffect(() => {
+    async function fetchIndice() {
+      if (isToday) {
+        const all = await getEnigmes();
+        const enigmeDuJour = all.find(e => e.date?.slice(0, 10) === today);
+        setIndice(enigmeDuJour?.indice || "Aucun indice disponible.");
+      }
+    }
+    fetchIndice();
+  }, [isToday, dateEnigme]);
 
   const flipCard = () => {
     const card = cardRef.current;
-    
     card.classList.add('card-flipping');
     if (!isFlipped) createMagicalStars(card);
-
     setIsFlipped(!isFlipped);
-
     setTimeout(() => {
       card.classList.remove('card-flipping');
     }, 600);
   };
-// glow effect mouse move et particules whow
+
   const handleMouseMove = (e) => {
     const card = cardRef.current;
     const rect = card.getBoundingClientRect();
@@ -31,6 +42,7 @@ function ReponseCardDashboard({ reponse = "Redécouvrir la réponse..." }) {
     if (glowRef.current) {
       glowRef.current.style.left = `${x}px`;
       glowRef.current.style.top = `${y}px`;
+      glowRef.current.style.opacity = 1;
     }
   };
 
@@ -97,12 +109,16 @@ function ReponseCardDashboard({ reponse = "Redécouvrir la réponse..." }) {
         <div className={`card-inner ${isFlipped ? 'flipped' : ''}`}>
           <div className="card-front">
             <div className="card-pattern">
-              <p className="click-to-reveal-dashboard">Clique pour redécouvrir la réponse</p>
+              <p className="click-to-reveal-dashboard">
+                {isToday ? "Clique pour révéler l'indice" : "Clique pour voir la réponse"}
+              </p>
             </div>
           </div>
           <div className="card-back">
             <div className="card-content">
-              <p className="fortune-text-dashboard">{reponse}</p>
+              <p className="fortune-text-dashboard">
+                {isToday ? indice : reponse}
+              </p>
             </div>
           </div>
         </div>
