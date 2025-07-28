@@ -1,0 +1,101 @@
+.favoris-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(180deg, #1e002e, #3b006a);
+  min-height: 100vh;
+
+}
+
+.favoris-title {
+  font-family: "Jim Nightshade", cursive;
+  font-size: 3rem;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.favoris-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  gap: 2rem;
+}
+
+/* Chaque favori est une carte comme .profile-card */
+.favori-item {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2rem;
+  /* width: 100%; */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  font-family: "Charm", cursive;
+  font-size: 1.2rem;
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.favori-item:hover {
+  transform: scale(1.02);
+}
+
+/* Bouton suppression */
+.suppression {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.suppression p {
+  margin-right: 0.5rem;
+}
+.suppression ion-icon {
+  font-size: 1.5rem;
+  color: #ff6b6b;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.suppression ion-icon:hover {
+  background-color: #ff6b6b;
+  color: #ffffff;
+  transform: scale(1.1);
+  border-radius: 50%;
+}
+
+
+/*Media queries pour les petits écrans */
+@media (max-width: 768px) {
+  .favoris-container {
+    padding: 1rem;
+    background: transparent;
+       color: var(--text-color);
+  transition: color 0.3s ease;
+
+  }
+
+  .favoris-title{
+       color: var(--text-color);
+  transition: color 0.3s ease;
+  margin-top: 5rem;
+  }
+
+  .favori-date, .favori-item {
+       color: var(--text-color);
+  transition: color 0.3s ease;
+  }
+  .favoris-title {
+    font-size: 2.5rem;    
+  }
+  .favori-item {
+    padding: 1.5rem;
+    font-size: 1rem;
+  }
+  .suppression ion-icon {
+    font-size: 1.2rem;
+  }
+} 

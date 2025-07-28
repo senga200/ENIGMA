@@ -32,6 +32,7 @@ export const authUser = async (req, res) => {
       sameSite: 'Strict',
       maxAge: 24 * 60 * 60 * 1000, // 24h
     });
+console.log('getMe user:', user.toJSON ? user.toJSON() : user);
 
     // Réponse avec infos utilisateur
     res.status(200).json({
@@ -39,6 +40,7 @@ export const authUser = async (req, res) => {
       username: user.username,
       email: user.email,
       role: user.role,
+        createdAt: user.createdAt?.toISOString() || user.createdAt,
     });
 
   } catch (error) {
@@ -63,6 +65,7 @@ export const getMe = async (req, res) => {
       username: user.username,
       email: user.email,
       role: user.role,
+      createdAt: user.createdAt,
     });
   } catch (error) {
     console.error('Erreur getMe :', error);

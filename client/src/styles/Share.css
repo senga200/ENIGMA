@@ -1,0 +1,102 @@
+
+.share-container {
+  padding: 0.5rem;
+  background: linear-gradient(180deg, #1e002e, #3b006a);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+  font-family: "Charm", cursive;
+  font-size: 1.2rem;
+  text-align: center;
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.share {
+  align-items: center;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.share-title {
+  color: #dfe6e9;
+}
+.share p {
+  font-family: "Charm", cursive;
+  font-size: 1.2rem;
+  color: #dfe6e9;
+  margin-bottom: 0.5rem;
+}
+
+.share-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.share button {
+    background-color: transparent;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+
+}
+
+
+.share ion-icon {
+  font-size: 24px;
+  margin-right: 0.5rem;
+}
+.share ion-icon:hover {
+  background-color: #a87aff;
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+    border-radius: 50%;
+}
+.share ion-icon:active {
+  background-color: #77269c;
+  transform: scale(0.95);
+    transition: transform 0.1s ease;
+    border-radius: 50%;
+}
+
+.favoris-message {
+  font-family: "Charm", cursive;
+  font-size: 1.2rem;
+  color: #dfe6e9;
+  margin-top: 1rem;
+  text-align: center;
+}
+.favoris-message a {
+  color: #dfe6e9;
+  text-decoration: none;
+}
+.favoris-message a:hover {
+  text-decoration: underline;
+  color: #00b894;
+  text-decoration: none;
+} 
+
+/*media queries */
+@media (max-width: 600px) {
+  .share-container {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  .share p {
+    font-size: 1rem;
+  }
+
+  .share button {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+}

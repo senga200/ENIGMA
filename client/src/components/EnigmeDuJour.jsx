@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import { getEnigmes } from '../utils/GetEnigmes';
 import MagicIndiceCard from './MagicIndiceCard';
 import HeartFavori from './HeartFavori';
-import { useUser } from '../utils/UserContext';
+import Share from './Share';
+import Modal from './Modal';
 import '../styles/EnigmeCard.css';
 
 
 function EnigmeDuJour() {
   const [enigme, setEnigme] = useState(null);
-    const { user } = useUser();
+  const [modalData, setModalData] = useState(null);
 
   useEffect(() => {
     async function fetchEnigmeDuJour() {
@@ -19,70 +20,111 @@ function EnigmeDuJour() {
       const enigmeDuJour = all.find(e => e.date && e.date.slice(0, 10) === today);
       setEnigme(enigmeDuJour || null);
     }
-
     fetchEnigmeDuJour();
   }, []);
 
   if (!enigme) return <p>Aucune énigme pour aujourd’hui.</p>;
   if (!enigme.enigme || !enigme.reponse) return <p>Énigme du jour indisponible.</p>;
 
-  const baseUrl = 'https://www.senga200.fr';
-  const shareText = `Devine l’énigme du jour avec moi ! 🧩\n\n"${enigme.enigme}"\n\nDécouvre-la sur ${baseUrl}`;
-  const encodedText = encodeURIComponent(shareText);
-  const pageUrl = encodeURIComponent(baseUrl);
 
+function DistanceDeLevenshtein(a, b) {
+  const matrix = [];
 
-    const copyToClipboard = () => {
-    navigator.clipboard.writeText(`${shareText}`).then(() => {
-      alert('Lien copié dans le presse-papiers !');
-    });
-  };
+  // Initialiser la première ligne et la première colonne de la matrice
+  for (let i = 0; i <= b.length; i++) {
+    matrix[i] = [i];
+  }
+  for (let j = 0; j <= a.length; j++) {
+    matrix[0][j] = j;
+  }
 
+  // Remplir la matrice en comparant chaque caractère des chaînes
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // Substitution
+          matrix[i][j - 1] + 1, // Insertion
+          matrix[i - 1][j] + 1 // Suppression
+        );
+      }
+    }
+  }
 
-
-  return (
-<div className="enigme-today-container">
-      <div className="enigme-today">
-      <p>Voici l'énigme du jour :</p>
-       <span className="heart-icon">
-      <HeartFavori enigmeId={enigme.id} />
-        </span>
-      <h3>{enigme.enigme}</h3>
-      <MagicIndiceCard indice={enigme.indice} />
-
-      <p>Date de l'énigme : {enigme.date ? new Date(enigme.date).toLocaleDateString() : 'Inconnue'}</p>
-    </div>
-    <div className="share">
-      <p>Partagez cette énigme :</p>
-        <a
-          href={`https://api.whatsapp.com/send?text=${encodedText}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <button>Partager sur WhatsApp</button>
-        </a>
-              <button onClick={copyToClipboard}>📋 Copier le lien</button>
-
-        <a
-          href={`mailto:?subject=Enigme du jour&body=${encodedText}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <button>✉️ Envoyer par e-mail</button>
-        </a>
-        <a
-          href={`https://www.facebook.com/sharer/sharer.php?u=${pageUrl}&quote=${encodedText}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <button>Partager sur Facebook</button>
-        </a>
-  
-      </div>
-
-</div>
-    
-  );
+  return matrix[b.length][a.length];
 }
+
+
+  const handleCheckAnswer = (userAnswer) => {
+    const userAnswerTrimmed = userAnswer.trim().toLowerCase();
+    const currentAnswerLowerCase = enigme.reponse.toLowerCase();
+    const levenshteinTolerance = 2; // Tolérance de 2 changements
+    const levenshteinDistance = DistanceDeLevenshtein(
+      userAnswerTrimmed,
+      currentAnswerLowerCase
+    );
+    if (userAnswerTrimmed === "") {
+      setModalData({
+        title: 'Il manque quelque chose',
+        message: 'Veuillez entrer une réponse avant de vérifier.',
+        onConfirm: () => setModalData(null)
+      });
+      return;
+    }
+    if (levenshteinDistance <= levenshteinTolerance) {
+      setModalData({
+        title: 'Bravo',
+        message: "Bravo, c'est la bonne réponse !",
+        onConfirm: () => setModalData(null)
+      });
+    } else {
+      setModalData({
+        title: 'Sorry',
+        message: "Désolé, ce n'est pas la bonne réponse. Essayez encore !",
+        onConfirm: () => setModalData(null)
+      });
+    }
+  }
+ 
+
+
+
+ return (
+    <div className="enigme-container">
+      <p className="enigme-label">Voici l'énigme du jour 🔮 :</p>
+      <span className="heart-icon">
+        <HeartFavori enigmeId={enigme.id} />
+      </span>
+      <p className="enigme-text">{enigme.enigme}</p>
+      <MagicIndiceCard indice={enigme.indice} revealText="Découvre l'indice" />
+
+      <p className="enigme-date">Nous sommes le : {enigme.date ? new Date(enigme.date).toLocaleDateString() : 'Inconnue'}</p>
+      <Share enigme={enigme} />
+      <div className='user-reponse'>
+      <p>tu as deviné ? vérifions cela : </p>
+      <input type="text" className="enigme-reponse" placeholder="Ta réponse ici..." />
+      <button className="profile-cta" onClick={() => handleCheckAnswer(document.querySelector('.enigme-reponse').value)}>
+        Vérifier la réponse
+      </button>
+      </div>
+       {modalData && (
+  <Modal
+    title={modalData.title}
+    message={modalData.message}
+    onConfirm={modalData.onConfirm}
+    onClose={modalData.onClose || (() => setModalData(null))}
+    confirmText={modalData.confirmText}
+    cancelText={modalData.cancelText}
+    showCancel={modalData.showCancel}
+  />
+)}
+
+      
+    </div>
+      );
+    }
+  
 
 export default EnigmeDuJour;

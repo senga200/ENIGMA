@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 export const postUser = async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    const { username, password, email, secretAnswer } = req.body;
 
     // Vérifier si l'utilisateur existe déjà
     const existingUser = await User.findOne({ where: { email } });
@@ -14,13 +14,18 @@ export const postUser = async (req, res) => {
 
     // Hacher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
+    // hacher la réponse à la question secrète si elle est fournie
+const hashedSecretAnswer = await bcrypt.hash(secretAnswer, 10);
+
 
     // Créer un nouvel utilisateur
     const newUser = await User.create({
       username,
       password: hashedPassword,
       email,
-      role: 'user', // Par défaut, le rôle est 'user'
+      // secretQuestion: req.body.secretQuestion,
+      secretAnswer: hashedSecretAnswer,
+      role: 'user', // Par défaut
     });
 
     res.status(201).json({
@@ -194,21 +199,24 @@ export const resetPassword = async (req, res) => {
     // Générer un nouveau mot de passe temporaire
     const tempPassword = Math.random().toString(36).slice(-8); // mot de passe aléatoire de 8 caractères
     
-    // Afficher le mot de passe temporaire dans la console
     console.log(`Mot de passe temporaire pour ${email} : ${tempPassword}`);
 
     // Hacher le nouveau mot de passe
     user.password = await bcrypt.hash(tempPassword, 10);
     await user.save();
 
-    res.status(200).json({ message: 'Mot de passe réinitialisé'  });
+    res.status(200).json({ message: 'Mot de passe réinitialisé',
+        email,
+      tempPassword 
+    });
     console.log(`Mot de passe temporaire pour ${email} : ${tempPassword}`);
+
+    tempPassword
   } catch (error) {
     console.error('Erreur resetPassword :', error);
     res.status(500).json({ message: 'Erreur serveur' });
   }
 }
-
 
 export const getUserByEmail = async (req, res) => {
   try {
@@ -229,7 +237,6 @@ export const getUserByEmail = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 }
-
 
 export const updateUserRole = async (req, res) => {
   try {
@@ -286,5 +293,52 @@ export const getUsersByRole = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 }
+
+export const verifySecret = async (req, res) => {
+  try {
+    const { email, secretAnswer } = req.body;
+
+    if (!email || !secretAnswer) {
+      return res.status(400).json({ message: 'Champs manquants.' });
+    }
+
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+    }
+
+    const isMatch = await bcrypt.compare(secretAnswer, user.secretAnswer);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Réponse incorrecte.' });
+    }
+
+    res.status(200).json({ message: 'Réponse correcte.' });
+  } catch (error) {
+    console.error('Erreur verifySecret :', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
+
+export const resetPasswordAfterSecret = async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.status(200).json({ message: 'Mot de passe mis à jour' });
+  } catch (error) {
+    console.error('Erreur resetPasswordAfterSecret :', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
+
 
 

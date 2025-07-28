@@ -1,5 +1,4 @@
-// update user : changer le mot de passe, email, supprimer le compte
-export const updateEmail = async (userId, email) => {
+const updateEmail = async (userId, email) => {
   const res = await fetch(`http://localhost:3003/users/${userId}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -9,8 +8,7 @@ export const updateEmail = async (userId, email) => {
   return await res.json();
 };
 
-
-export const deleteUser = async (userId) => {
+const deleteUser = async (userId) => {
   const res = await fetch(`http://localhost:3003/users/${userId}`, {
     method: 'DELETE'
   });
@@ -18,4 +16,17 @@ export const deleteUser = async (userId) => {
   const text = await res.text();
   return text ? JSON.parse(text) : {};
 };
+
+const updatePassword = async (userId, oldPassword, newPassword) => {
+  const res = await fetch(`http://localhost:3003/users/${userId}/change-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ oldPassword, newPassword })
+  });
+  if (!res.ok) throw new Error('Erreur mise à jour mot de passe');
+  return await res.json();
+};
+
+export { updateEmail, deleteUser, updatePassword };
+
 

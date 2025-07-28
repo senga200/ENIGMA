@@ -89,14 +89,15 @@
 }
 
 .card-content {
+
   padding: 2rem;
   text-align: center;
   color: #fff;
 }
 
 .fortune-text {
-  font-size: 1.2rem;
-  font-style: italic;
+  font-family: "Charm", cursive;
+  font-size: 1.5rem;
   line-height: 1.5;
   color: #ffeaa7;
   margin: 0;
@@ -111,7 +112,8 @@
 
 
 .click-to-reveal {
-  font-size: 1.1rem;
+  font-family: "Charm", cursive;
+  font-size: 2rem;
   font-weight: bold;
   text-shadow: 0 0 10px #ffffff;
   margin: 0;

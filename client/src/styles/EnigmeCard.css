@@ -10,6 +10,58 @@
   }
 }
 
+.enigme-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  z-index: 1;
+  backdrop-filter: blur(10px);
+  /* Glassmorphisme */
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1),
+              0 0 60px rgba(106, 13, 173, 0.25);
+  animation: fadeIn 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.enigme-label{
+  font-family: "Jim Nightshade", cursive;
+  font-size: 3rem;
+  font-weight: 400;
+  font-style: normal;
+   color: var(--text-color);
+  transition: color 0.3s ease;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.enigme-text {
+  color: var(--text-color);
+  transition: color 0.3s ease;
+  font-family: "Charm", cursive;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+
+.enigme-date {
+  font-size: 0.95rem;
+   color: var(--text-color);
+  transition: color 0.3s ease;
+  font-style: italic;
+}
+
 .heart-icon {
   position: absolute;
   top: 2.5rem;
@@ -18,62 +70,6 @@
   margin-right: 10px;
 
 }
-
-
-
-.enigme-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background-color: #2c3e50;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-
-
-.enigme-label {
-  font-size: 1.1rem;
-  color: #74b9ff;
-  margin-bottom: 0.5rem;
-}
-
-.enigme-text {
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
-}
-
-.enigme-reponse {
-  font-size: 1.1rem;
-  color: #00cec9;
-  margin-bottom: 0.5rem;
-}
-
-.enigme-reponse span {
-  font-weight: 600;
-  color: #55efc4;
-}
-
-.enigme-date {
-  font-size: 0.95rem;
-  color: #b2bec3;
-  font-style: italic;
-}
-
-.enigme-message {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #dfe6e9;
-  margin-top: 3rem;
-}
-
 
 .favoris {
   display: flex;
@@ -90,4 +86,70 @@
   color: #d63031;
 }
 
+.user-reponse {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.enigme-reponse {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-color);
+  font-size: 1rem;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease;
+}
+.enigme-reponse::placeholder {
+  color: #ddddddc5;
+  opacity: 1;
+}
+.enigme-reponse:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+.enigme-reponse:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.user-reponse button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #77269c;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btn:hover {
+  background-color: #a87aff;
+  transform: scale(1.05);
+}
+.btn:active {
+  transform: scale(0.95);
+}
 
+/*media queries*/
+@media (max-width: 768px) {
+  .enigme-container {
+    padding: 1rem;
+    width: 90%;
+  }
+
+  .enigme-text {
+    font-size: 1.2rem;
+  }
+
+  .enigme-label {
+    font-size: 1.5rem;
+  }
+
+  .enigme-reponse {
+    font-size: 1rem;
+  }
+}

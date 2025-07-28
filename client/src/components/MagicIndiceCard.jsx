@@ -2,8 +2,8 @@
 import '../styles/MagicIndiceCard.css';
 import { useRef, useState } from 'react';
 
-
-function MagicIndiceCard({ indice = "Votre indice mystérieux apparaît ici..." }) {
+function MagicIndiceCard({ indice = "Votre indice mystérieux apparaît ici...", 
+  revealText = "Clique pour révéler l'indice"  }) {
   const cardRef = useRef(null);
   const glowRef = useRef(null);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -93,18 +93,17 @@ function MagicIndiceCard({ indice = "Votre indice mystérieux apparaît ici..." 
         onMouseLeave={handleMouseLeave}
       >
         <div className="glow" ref={glowRef}></div>
-
         <div className={`card-inner ${isFlipped ? 'flipped' : ''}`}>
           <div className="card-front">
             <div className="card-pattern">
-              <p className="click-to-reveal">Clique pour révéler l'indice</p>
+              {revealText && <p className="click-to-reveal">{revealText}</p>} 
             </div>
           </div>
           <div className="card-back">
-            <div className="card-content">
-              <p className="fortune-text">{indice}</p>
-            </div>
+          <div className="card-content">
+            <p className="fortune-text">{indice}</p>
           </div>
+        </div>
         </div>
       </div>
     </div>

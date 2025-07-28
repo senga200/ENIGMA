@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import{ useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../utils/UserContext";
 import "../styles/NavBar.css";
@@ -15,7 +15,7 @@ function NavBar({ isSwitched, handleToggle }) {
     { icon: "home-outline", path: "/" },
     { icon: "heart-outline", path: "/dashboard" },
     { icon: "person-outline", path: "/profil" },
-     {
+    {
       icon: user ? "log-out-outline" : "lock-closed-outline",
       path: user ? "/logout" : "/signin",
     },
@@ -52,12 +52,9 @@ function NavBar({ isSwitched, handleToggle }) {
               <li
                 key={index}
                 ref={(el) => (listRefs.current[index] = el)}
-                className={
-          (activeIndex === index || (item.icon === "contrast-outline" && isSwitched))
-    ? "active"
-    : ""
-}
-
+                className={(activeIndex === index || 
+                (item.icon === "contrast-outline" && isSwitched))
+                ? "active": ""}
                 onMouseEnter={() => handleMouseEnter(index)}
                 onClick={() => {
                   if (isLogout) {

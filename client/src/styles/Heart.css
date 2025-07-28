@@ -1,3 +1,23 @@
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.5) rotate(45deg);
+  }
+}
+
+@keyframes magicGradient {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+
+
+
 /* Particules magiques whow */
 .particle {
   position: fixed;
@@ -15,11 +35,13 @@
   position: relative;
   display: inline-block;
   cursor: pointer;
+  
 }
 
 .heart:hover ion-icon {
   transform: scale(1.2);
   transition: transform 1s ease-in-out;
+
 }
 
 .heart ion-icon {
@@ -30,9 +52,34 @@
   color: white;
 }
 .red {
-  color: red;
+  color: rgb(231, 0, 0);
 }
 
-/* .red ion-icon {
-  color: red;
-} */
+
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: sparkle 3s infinite ease-in-out;
+  filter: blur(1.5px);
+  pointer-events: none;
+  user-select: none;
+  z-index: 50;
+}
+
+.heart::before {
+  top: 4px;
+  left: 5px;
+  animation-delay: 0s;
+}
+
+.heart::after {
+  bottom: 15px;
+  right: 8px;
+  animation-delay: 1.5s;
+}

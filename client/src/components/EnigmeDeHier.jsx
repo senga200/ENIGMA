@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getEnigmes } from '../utils/GetEnigmes';
 import '../styles/EnigmeCard.css';
 import HeartFavori from './HeartFavori';
+import MagicIndiceCard from './MagicIndiceCard';
 import { useUser } from '../utils/UserContext';
 
 function EnigmeDeHier() {
@@ -13,8 +14,8 @@ function EnigmeDeHier() {
   useEffect(() => {
     async function fetchEnigmeDeHier() {
       const all = await getEnigmes();
-        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-  const enigmeDeHier = all.find(e => e.date && e.date.slice(0, 10) === yesterday);
+      const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+      const enigmeDeHier = all.find(e => e.date && e.date.slice(0, 10) === yesterday);
       // const yesterday = new Date('2025-07-18').toISOString().slice(0, 10);
       // const enigmeDeHier = all.find(e => e.date && e.date.slice(0, 10) === yesterday);
       setEnigme(enigmeDeHier || null);
@@ -31,16 +32,15 @@ function EnigmeDeHier() {
     <div className="enigme-container">
       <p className="enigme-label">Hier, l'énigme était :</p>
       <span className="heart-icon">
-      <HeartFavori enigmeId={enigme.id} />
-        </span>
+        <HeartFavori enigmeId={enigme.id} />
+      </span>
       <p className="enigme-text">{enigme.enigme}</p>
-      <p className="enigme-reponse">💡 Réponse : <span>{enigme.reponse}</span></p>
-      <p className="enigme-date">📅 {new Date(enigme.date).toLocaleDateString()}</p>
+        <MagicIndiceCard indice={enigme.reponse} revealText="Découvre la réponse" />
+      <p className="enigme-date">Hier, nous étions le : {new Date(enigme.date).toLocaleDateString()}</p>
       <span className='favoris'>
         {user ? (
           <>
-          <p>  <a href="/dashboard">Retrouve ici tes énigmes favorites</a> !</p>
-
+          <p className='favoris-message'>  <a href="/dashboard">Retrouve ici tes énigmes favorites !</a> </p>
           </>
         ) : (
           <>
@@ -49,6 +49,7 @@ function EnigmeDeHier() {
         )}
       </span>
     </div>
+
   );
 }
 export default EnigmeDeHier;

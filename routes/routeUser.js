@@ -10,12 +10,15 @@ import {
     getUserByEmail,
     updateUserRole,
     getUsersByRole,
-    getCurrentUser
+    getCurrentUser,
+    verifySecret,
+    resetPasswordAfterSecret
 } from '../controllers/userController.js';
 
 const router = express.Router();
 
 router.post('/', postUser);
+router.post('/verify-secret', verifySecret);
 router.get('/all', getAllUsers);
 router.get('/current', getCurrentUser);
 router.get('/email', getUserByEmail);
@@ -24,6 +27,7 @@ router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
 router.post('/:id/change-password', changePassword);
 router.post('/reset-password', resetPassword);
+router.post('/reset-password-after-secret', resetPasswordAfterSecret);
 router.put('/:id/update-role', updateUserRole);
 router.get('/role/:role', getUsersByRole);
 

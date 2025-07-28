@@ -3,9 +3,11 @@ import { addFavori } from '../utils/AddFavori';
 import { useUser } from '../utils/UserContext';
 import { getFavorisByUser } from "../utils/GetFavoriByUser";
 import '../styles/Heart.css'; 
+import Modal from "./Modal";
 
 function HeartFavori({ enigmeId }) {
   const { user } = useUser();
+  const [modalData, setModalData] = useState(null);
   const [isFavori, setIsFavori] = useState(false);
   const [error, setError] = useState(null);
 
@@ -70,29 +72,43 @@ function HeartFavori({ enigmeId }) {
     }
     checkFavori();
   }, [user, enigmeId]); 
-  if (!user) return null; // Ne pas afficher le cœur si l'utilisateur n'est pas connecté
+  if (!user) return null; // pas de user co = pas de coeur
   if (error) return <p className="error">{error}</p>;
 
 
   const handleAdd = async (enigmeId) => {
     if (!user || !enigmeId) return;
     if (isFavori) {
-    alert("Cette énigme est déjà dans vos favoris !");
+    //alert("Cette énigme est déjà dans vos favoris !");
+     setModalData({
+            title: 'Déjà un favori',
+            message: 'Cette énigme est déjà dans vos favoris !',
+            onConfirm: () => setModalData(null)
+});
     return;
 }
 
-  const confirmAdd = window.confirm("Êtes-vous sûr de vouloir ajouter ce favori ?");
-  if (!confirmAdd) return;
+  // const confirmAdd = window.confirm("Êtes-vous sûr de vouloir ajouter ce favori ?");
+  // if (!confirmAdd) return;
     if (!user || !enigmeId) return;
     try {
       await addFavori(user.id, enigmeId);
       if (isFavori) {
-        alert("Cette énigme est déjà dans vos favoris !");
+        //alert("Cette énigme est déjà dans vos favoris !");
+         setModalData({
+            title: 'déjà un favori',
+            message: 'Cette énigme est déjà dans vos favoris !',
+            onConfirm: () => setModalData(null)
+});
         return;
       }
       setIsFavori(true);
       createMagicalStars(document.querySelector('.heart'));
-      alert("Favori ajouté avec succès !");
+      setModalData({
+        title: 'Bravo',
+        message: 'Favori ajouté avec succès !',
+        onConfirm: () => setModalData(null)
+      });
     } catch (error) {
       console.error('Erreur lors de l\'ajout du favori:', error);
     }
@@ -107,6 +123,18 @@ return(
         {isFavori ? <span className="red"><ion-icon id="red" name="heart"></ion-icon></span> : <span className="white"> <ion-icon name="heart-outline"></ion-icon></span>}
       </span>
       {error && <p className="error">{error}</p>}
+        {modalData && (
+  <Modal
+    title={modalData.title}
+    message={modalData.message}
+    onConfirm={modalData.onConfirm}
+    onClose={modalData.onClose || (() => setModalData(null))}
+    confirmText={modalData.confirmText}
+    cancelText={modalData.cancelText}
+    showCancel={modalData.showCancel}
+  />
+)}
+
     </div>
 
   );

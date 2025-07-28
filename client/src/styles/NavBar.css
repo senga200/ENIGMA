@@ -1,9 +1,4 @@
 
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
 
 .nav-wrapper {
   position: fixed;
@@ -85,7 +80,7 @@
               0 0 60px #5da6ff;
 }
 
-/* Color variations based on index */
+
 .nav li:nth-child(1).active ~ #marker::before {
   background: #5da6ff;
   box-shadow: 0 0 15px #5da6ff,
@@ -123,3 +118,15 @@
 }
 
 
+
+
+/*media queries*/
+@media (max-width: 768px) {
+
+.nav a{
+  padding: 10px 15px;
+  font-size: 0.9rem;
+}
+
+
+}

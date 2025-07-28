@@ -1,21 +1,163 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
 
-.enigme-container {
+.create-account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 220px;
+  background: linear-gradient(180deg, #1e002e, #3b006a);
+  font-family: "Jim Nightshade", cursive;
   padding: 2rem;
-  max-width: 600px;
-  margin: 2rem auto;
-  font-family: 'Segoe UI', sans-serif;
-  color: #f1f1f1;
-  background: linear-gradient(120deg, #1e1e2f, #2a2a40);
-  border-radius: 8px;
-  animation: fadeIn 0.8s ease;
-  line-height: 1.6;
-  box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
+  font-size: 2rem;
+  text-align: center;
 }
 
+  .profile-container {
+    margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0rem;
+  background: linear-gradient(180deg, #1e002e, #3b006a);
+  min-height: 100vh;
+
+}
+
+
+.profile-title {
+  font-family: "Jim Nightshade", cursive;
+  font-size: 3rem;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.user-non-co{
+  font-family: "Jim Nightshade", cursive;
+  padding: 0 4.5rem ;
+  color: #ffffff;
+  font-size:2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.user-non-co-cta{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0rem;
+  background: linear-gradient(180deg, #1e002e, #3b006a);
+  min-height: 100vh;
+}
+.profile-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.profile-infos {
+  font-family: "Charm", cursive;
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.profile-cta{
+  font-family: "Charm", cursive;
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+}
+
+.profile-cta input {
+
+  margin: 1rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.329);
+  color: #ffffff;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+
+.profile-cta input::placeholder {
+  color: #dddddd; 
+  opacity: 1; 
+}
+
+.profile-cta button {
+  padding: 0.5rem 1rem;
+  background-color: #77269c;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.profile-cta button:hover {
+  background-color: #a87aff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+  color: #3b006a;
+}
+.profile-cta button:active {
+  transform: scale(0.96);
+}
+
+.profile-btn {
+  padding: 0.6rem 1.2rem;
+  background-color: #77269c;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.profile-btn:hover {
+  background-color: #a87aff;
+}
+.profile-btn:active {
+  transform: scale(0.96);
+}
+
+.checkbox-inline {
+  display: flex;
+  align-items: center;
+  margin: 1rem;
+}
+
+
+
+/*media queries*/
+@media (max-width: 768px) {
+
+  .profile-infos {
+    font-size: 1rem;
+  }
+  .profile-cta input {
+    width: 80%;
+    font-size: 0.9rem;
+  }
+  .profile-cta button {
+    font-size: 0.9rem;
+  }
+
+}

@@ -1,0 +1,171 @@
+.sign-container{
+    width: 80%;
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0rem;
+    background: linear-gradient(180deg, #1e002e, #3b006a);
+    min-height: 100vh;
+}
+.bienvenue {
+    font-family: "Charm", cursive;
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin: 1.5rem;
+    text-align: center;
+}
+
+
+.sign-container button{
+  padding: 0.5rem 1rem;
+  background-color: #77269c;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sign-container button:hover {
+    background-color: #a87aff;
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.sign-container button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+.sign-title {
+    font-family: "Jim Nightshade", cursive;
+    font-size: 3rem;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.sign-form {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: "Charm", cursive;
+    color: #ffffff;
+}
+
+.form-group input {
+
+    padding: 0.5rem;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.329);
+    color: #ffffff;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: #dddddd;
+    opacity: 1;
+}   
+
+.form-group input:focus {
+    background-color: rgba(255, 255, 255, 0.5);
+    outline: none;
+}
+
+
+.signin-links {
+    margin-top: 1rem;
+    font-family: "Charm", cursive;
+    color: #ffffff;
+    font-size: 1rem;
+    text-align: center;
+
+}   
+
+.signin-links a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.signin-links p {
+    margin: 0.5rem 0;
+}
+
+
+.checkbox-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; 
+  margin-top: 0.5rem;
+}
+
+.checkbox-label {
+  margin: 0;
+}
+
+
+/*media queries for responsiveness */
+@media (max-width: 600px) {
+    .sign-container {
+         width: 60%;
+        margin: 4rem auto 0 auto;
+        padding: 1rem;
+    }
+    .user-non-co-cta p{
+        font-size: 1.5rem;
+        padding: 0;
+    }
+
+    .sign-title {
+        font-size: 2rem;
+    }
+    .sign-form {
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+    .form-group input {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+        width: 100%;
+    }
+    .profile-cta input {            
+        font-size: 0.9rem;
+    }
+    .profile-cta button {
+        font-size: 0.9rem;
+    }
+    .bienvenue {
+        font-size: 1rem;
+    }
+    .signin-links {
+        font-size: 0.9rem;
+    }
+    .checkbox-label {
+        font-size: 0.9rem;
+    }           
+    .checkbox-inline {
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+}
+

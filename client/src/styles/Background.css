@@ -16,7 +16,13 @@
   }
 }
 
+:root {
+  --text-color: #000; 
+}
+
+
 .wrapper {
+
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -81,3 +87,9 @@ label[for="switch"] .icon {
 }
 
 
+/*media queries*/
+@media (max-width: 768px) {
+  .hero {
+    background-size: 400%, 300%;
+  }
+}

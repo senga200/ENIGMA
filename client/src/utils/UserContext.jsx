@@ -5,8 +5,7 @@ const UserContext = createContext();
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-    // Récupération de l'utilisateur connecté
-    // Utilisation de useEffect pour charger l'utilisateur au démarrage
+    // Recup de user co + useEffect pour charger le user au démarrage
 
 
 useEffect(() => {
@@ -18,6 +17,8 @@ useEffect(() => {
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
+          console.log('Utilisateur récupéré:', userData);
+          console.log('date de création:', new Date(userData.createdAt).toLocaleDateString());
         } else {
           setUser(null);
         }
@@ -56,7 +57,6 @@ useEffect(() => {
   );
 }
 
-// Hook pratique
 export function useUser() {
   return useContext(UserContext);
 }

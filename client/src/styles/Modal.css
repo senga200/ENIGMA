@@ -1,0 +1,69 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 0, 30, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(6px);
+}
+
+.modal-container {
+  background: linear-gradient(180deg, #2a0042, #44006e);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 400px;
+  color: white;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.modal-title {
+  font-family: 'Charm', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.modal-message {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal-buttons .btn {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.modal-buttons .btn.confirm {
+  background-color: #77269c;
+  color: white;
+}
+
+.modal-buttons .btn.confirm:hover {
+  background-color: #a87aff;
+  transform: scale(1.05);
+}
+
+.modal-buttons .btn.cancel {
+  background-color: #999;
+  color: white;
+}
+
+.modal-buttons .btn.cancel:hover {
+  background-color: #bbb;
+  transform: scale(1.05);
+}

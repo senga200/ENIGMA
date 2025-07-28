@@ -8,6 +8,8 @@ import SignUp from "./pages/SignUp";
 import Page404 from "./pages/Page404";
 import NavBar from './components/NavBar';
 import Profil from './pages/Profil';  
+import ResetPw from './pages/ResetPw';
+
 
 
 function App() {
@@ -21,6 +23,11 @@ function App() {
     );
   }, [isSwitched]);
 
+    document.documentElement.style.setProperty(
+    '--text-color',
+    isSwitched ? '#a3ccff' : '#1e002e'
+  );
+
   const handleToggle = () => {
     setIsSwitched(prev => !prev);
   };
@@ -31,14 +38,19 @@ function App() {
       </section>
 
             <NavBar isSwitched={isSwitched} handleToggle={handleToggle} />
+              <main className="content">
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/profil" element={<Profil />} />
+        <Route path="/reset-password" element={<ResetPw />} />
+        {/* Route pour la page 404 */}
         <Route path="*" element={<Page404 />} />
       </Routes>
+      </main>
     </Router>
   );
 }

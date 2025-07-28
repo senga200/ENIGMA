@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../utils/UserContext';
+import '../styles/Sign.css';
 
 function SignIn() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { login } = useUser(); // login depuis le contexte
@@ -15,6 +18,12 @@ function SignIn() {
         setLoading(true);
         setErrorMsg('');
 
+        if (!username || !password) {
+            setErrorMsg('Veuillez remplir tous les champs');
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:3003/auth/login', {
                 method: 'POST',
@@ -22,7 +31,7 @@ function SignIn() {
                 body: JSON.stringify({ username, password }),
                 credentials: 'include'
             });
-
+            
             if (!response.ok) {
                 throw new Error('Identifiants incorrects');
             }
@@ -40,8 +49,9 @@ function SignIn() {
     };
 
     return (
-        <div className="signin-container">
-            <h1>Connexion</h1>
+        <div className="sign-container">
+            <h2 className="sign-title">Connexion</h2>
+            <div className="sign-form">
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="username">Nom d'utilisateur</label>
@@ -56,22 +66,34 @@ function SignIn() {
                 <div className="form-group">
                     <label htmlFor="password">Mot de passe</label>
                     <input
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
+                    <label>
+                    <input
+                        type="checkbox"
+                        checked={showPassword}
+                        onChange={() => setShowPassword(!showPassword)}
+                    />
+                        Afficher le mot de passe
+                    </label>
                 </div>
                 <button type="submit" disabled={loading}>
                     {loading ? 'Connexion...' : 'Se connecter'}
                 </button>
                 {errorMsg && <p className="error">{errorMsg}</p>}
             </form>
+            </div>
+
+            <div className="signin-links">
 
             <p>Pas encore inscrit ? <a href="/signup">Créer un compte</a></p>
             <p>Mot de passe oublié ? <a href="/reset-password">Réinitialiser</a></p>
             <p>Retour à la <a href="/">page d'accueil</a></p>
+        </div>
         </div>
     );
 }

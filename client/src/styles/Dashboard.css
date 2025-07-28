@@ -1,10 +1,18 @@
-.container{
-    margin-top: 10rem;
+/* .container{
+    margin-top: 25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
+}
+
+h2 {
+    font-family: "Jim Nightshade", cursive;
+    font-size: 3rem;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 
@@ -19,4 +27,17 @@
   animation: fadeIn 0.8s ease;
   line-height: 1.6;
   box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
-}
+} */
+
+
+/* .favoris-container {
+border: solid red 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0rem;
+  background: linear-gradient(180deg, #1e002e, #3b006a);
+  min-height: 100vh;
+  color: #fff;
+} */

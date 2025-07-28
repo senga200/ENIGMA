@@ -1,3 +1,102 @@
-.container{
-    margin-top: 15rem;
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.5) rotate(45deg);
+  }
 }
+
+@keyframes magicGradient {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0rem;
+  min-height: 100vh;
+
+}
+
+
+
+
+
+.logo {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin-top: 7rem;
+}
+
+.logo img {
+  width: 30rem;
+  max-width: 75%;
+  height: auto;
+}
+
+
+
+.username span {
+  position: relative; 
+  display: inline-block;
+  font-family: "Jim Nightshade", cursive;
+  font-size: 5rem;
+  text-align: center;
+  z-index: 1;
+  font-family: "Jim Nightshade", cursive;
+  font-weight: 700;
+  font-style: normal;
+  background: linear-gradient(270deg, #6a0dad, #00ffff, #ff69b4, #6a0dad);
+  background-size: 800% 800%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: magicGradient 10s ease infinite;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 20px rgba(106, 13, 173, 0.8);
+  user-select: none;
+  cursor: default;
+}
+
+.username span::before,
+.username span::after {
+  content: '*'; 
+  position: absolute;
+  color: #fff;
+  opacity: 0.8;
+  animation: sparkle 3s infinite ease-in-out;
+  font-size: 2rem;
+  filter: blur(1px); 
+  pointer-events: none;
+  user-select: none;
+}
+
+.username span::before {
+  top: 7px;
+  left: -3px;
+  animation-delay: 0s;
+}
+
+.username span::after {
+  bottom: 15px;
+  right: -5px;
+  animation-delay: 1.5s;
+}
+
+
+/*media queries*/
+@media (max-width: 768px) {
+  .logo img {
+    width: 20rem;
+  }
+  .username span {
+    font-size: 3rem;
+  }
+} 
+
