@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../utils/UserContext';
+import { apiFetchJson } from '../utils/api';
 import '../styles/Sign.css';
 
 function SignIn() {
@@ -25,27 +26,23 @@ function SignIn() {
         }
 
         try {
-            const response = await fetch('http://localhost:3003/auth/login', {
+            // apiFetchJson lancera une erreur si response.ok === false
+            const data = await apiFetchJson('/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
-                credentials: 'include'
+                body: JSON.stringify({ username, password })
             });
             
-            if (!response.ok) {
-                throw new Error('Identifiants incorrects');
-            }
-
-            const data = await response.json();
             console.log('Connexion réussie:', data);
             login(data); // Stocke dans le contexte
             setUsername('');
             setPassword('');
             navigate('/'); 
         } catch (error) {
-            setErrorMsg(error.message);
+            setErrorMsg(error.message || 'Erreur lors de la connexion');
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     return (
@@ -89,11 +86,10 @@ function SignIn() {
             </div>
 
             <div className="signin-links">
-
-            <p>Pas encore inscrit ? <a href="/signup">Créer un compte</a></p>
-            <p>Mot de passe oublié ? <a href="/reset-password">Réinitialiser</a></p>
-            <p>Retour à la <a href="/">page d'accueil</a></p>
-        </div>
+                <p>Pas encore inscrit ? <a href="/signup">Créer un compte</a></p>
+                <p>Mot de passe oublié ? <a href="/reset-password">Réinitialiser</a></p>
+                <p>Retour à la <a href="/">page d'accueil</a></p>
+            </div>
         </div>
     );
 }

@@ -1,32 +1,51 @@
+import { apiFetchJson, apiFetch } from './api';
+
 const updateEmail = async (userId, email) => {
-  const res = await fetch(`http://localhost:3003/users/${userId}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email })
-  });
-  if (!res.ok) throw new Error('Erreur mise à jour email');
-  return await res.json();
+  try {
+    const data = await apiFetchJson(`/users/${userId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    return data;
+  } catch (err) {
+    throw new Error(err.message || 'Erreur mise à jour email');
+  }
 };
 
 const deleteUser = async (userId) => {
-  const res = await fetch(`http://localhost:3003/users/${userId}`, {
-    method: 'DELETE'
-  });
-  if (!res.ok) throw new Error('Erreur suppression compte');
-  const text = await res.text();
-  return text ? JSON.parse(text) : {};
+  try {
+    const res = await apiFetch(`/users/${userId}`, {
+      method: 'DELETE'
+    });
+
+    if (!res.ok) {
+      throw new Error(`Erreur suppression compte : ${res.status}`);
+    }
+
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      return await res.json();
+    }
+
+    const text = await res.text();
+    return text ? JSON.parse(text) : {};
+  } catch (err) {
+    throw new Error(err.message || 'Erreur suppression compte');
+  }
 };
 
 const updatePassword = async (userId, oldPassword, newPassword) => {
-  const res = await fetch(`http://localhost:3003/users/${userId}/change-password`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ oldPassword, newPassword })
-  });
-  if (!res.ok) throw new Error('Erreur mise à jour mot de passe');
-  return await res.json();
+  try {
+    const data = await apiFetchJson(`/users/${userId}/change-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ oldPassword, newPassword })
+    });
+    return data;
+  } catch (err) {
+    throw new Error(err.message || 'Erreur mise à jour mot de passe');
+  }
 };
 
 export { updateEmail, deleteUser, updatePassword };
-
-

@@ -1,5 +1,7 @@
 import { Enigme } from '../models/index.js'; 
 import fetch from 'node-fetch';
+import { formatInTimeZone } from 'date-fns-tz'
+
 
 
 
@@ -31,9 +33,9 @@ export async function generateEnigmeForCron() {
     const parsedText = JSON.parse(responseData.text);
     console.log('Texte analysé:', parsedText);
 
-    const today = new Date().toISOString().split('T')[0];
-    console.log(' Date du jour:', today);
-    
+const today = formatInTimeZone(new Date(), 'Europe/Paris', 'yyyy-MM-dd');
+console.log(' Date du jour pour l enigme paris:', today);
+
     const newEnigme = await Enigme.create({
       enigme: parsedText.enigme,
       indice: parsedText.indice,

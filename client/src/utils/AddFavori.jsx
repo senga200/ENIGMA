@@ -1,30 +1,20 @@
 
+import { apiFetchJson } from './api';
+
 async function addFavori(userId, enigmeId) {
-  if (!userId || !enigmeId) return;
+  if (!userId || !enigmeId) return null;
 
   try {
-    const response = await fetch('http://localhost:3003/favoris/add', {
+    // apiFetchJson renvoie le JSON (ou null) et lève une erreur si status !ok
+    const data = await apiFetchJson('/favoris/add', {
       method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userId, enigmeId }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, enigmeId })
     });
 
-    if (!response.ok) {
-      throw new Error(`Erreur serveur : ${response.status}`);
-    }
- // parse du JSON que si une réponse est attendue
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-      return await response.json();
-    } else {
-      return null; 
-    }
-
+    return data; // JSON ou null si endpoint ne renvoie pas de JSON
   } catch (error) {
-    console.error('Erreur lors de l\'ajout du favori :', error);
+    console.error("Erreur lors de l'ajout du favori :", error);
     return null;
   }
 }

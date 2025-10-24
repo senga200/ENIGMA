@@ -1,52 +1,45 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { apiFetch, apiFetchJson } from './api';
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-    // Recup de user co + useEffect pour charger le user au démarrage
 
-
-useEffect(() => {
+  // Récupération de l'utilisateur connecté au démarrage
+  useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch('/auth/me', {
-          credentials: 'include' //envoyer les cookies
-        });
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
+        // apiFetchJson : erreur si status != ok et renvoie le JSON parsé sinon
+        const userData = await apiFetchJson('/auth/me', { method: 'GET' });
+        setUser(userData);
+        if (userData?.createdAt) {
           console.log('Utilisateur récupéré:', userData);
           console.log('date de création:', new Date(userData.createdAt).toLocaleDateString());
-        } else {
-          setUser(null);
         }
       } catch (error) {
+        // si erreur, on remet user à null
         console.error('Erreur lors de la récupération de l’utilisateur:', error);
         setUser(null);
       } finally {
-        setLoading(false); // Fin du chargement
+        setLoading(false);
       }
     };
     fetchUser();
   }, []);
 
-
-
   const login = (userData) => {
-    setUser(userData); // vide si link auth/me après login
+    setUser(userData); // met à jour le contexte après connexion
   };
+
   const logout = async () => {
     try {
-      await fetch('/auth/logout', {
-        method: 'POST',
-        credentials: 'include'
-      });
+      await apiFetch('/auth/logout', { method: 'POST' });
     } catch (error) {
       console.error('Erreur lors de la déconnexion:', error);
     } finally {
-      setUser(null); 
+      setUser(null);
     }
   };
 

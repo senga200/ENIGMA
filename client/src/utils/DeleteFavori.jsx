@@ -1,32 +1,21 @@
+import { apiFetchJson } from './api';
+
 async function deleteFavorisByUser(userId, enigmeId) {
-  if (!userId || !enigmeId) return;
+  if (!userId || !enigmeId) return null;
 
   try {
-    const response = await fetch(`http://localhost:3003/favoris/deleteFavori`, {
+    // apiFetchJson lèvera une erreur si status n'est pas ok et retournera le JSON (ou null)
+    const data = await apiFetchJson('/favoris/deleteFavori', {
       method: 'DELETE',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, enigmeId })
     });
 
-    if (!response.ok) {
-      throw new Error(`Erreur serveur : ${response.status}`);
-    }
-
-    // parse du JSON que si une réponse est attendue
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-      return await response.json();
-    } else {
-      return null; 
-    }
-
+    return data; // JSON ou null si pas de JSON retourné (ex: 204)
   } catch (error) {
     console.error('Erreur suppression favoris:', error);
+    return null;
   }
 }
-
 
 export { deleteFavorisByUser };

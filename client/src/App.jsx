@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useUser } from './utils/UserContext';
 import Home from "./pages/Home"
 import Dashboard from "./pages/Dashboard";
 import SignIn from "./pages/SignIn";
@@ -14,6 +15,7 @@ import ResetPw from './pages/ResetPw';
 
 function App() {
 
+    const { loading } = useUser(); 
     const [isSwitched, setIsSwitched] = useState(false);
 
   useEffect(() => {
@@ -31,6 +33,11 @@ function App() {
   const handleToggle = () => {
     setIsSwitched(prev => !prev);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  
   return (
     <Router>
             <section className="wrapper">

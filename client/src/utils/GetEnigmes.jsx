@@ -1,7 +1,12 @@
 
+
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 async function getEnigmes() {
   try {
-    const response = await fetch('http://localhost:3003/enigmes/all', {
+    //const response = await fetch('http://localhost:3003/enigmes/all', {
+        const response = await fetch(`${API_URL}/enigmes/all`, {
+
       method: 'GET',
       credentials: 'include', 
       headers: {

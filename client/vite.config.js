@@ -7,10 +7,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/auth': 'http://localhost:3003',
+      '/users': 'http://localhost:3003',
+      '/enigmes': 'http://localhost:3003',
+      '/favoris': 'http://localhost:3003'
     }
   }
 })
-
-
-
-///ajout de server proxy pour rediriger les requêtes vers auth

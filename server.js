@@ -39,22 +39,28 @@ const __dirname = path.dirname(__filename);
 app.use(cookieParser());
 
 // CORS 
-const allowedOrigins = [
-  'http://localhost:5173', // dev
-  `http://vps-1b9fc044.vps.ovh.net:${port}`, // prod avec port
-  'http://vps-1b9fc044.vps.ovh.net' // prod sans port
-];
+// const allowedOrigins = [
+//   'http://localhost:5173', // dev
+//   `http://vps-1b9fc044.vps.ovh.net:${port}`, // prod avec port
+//   'http://vps-1b9fc044.vps.ovh.net', // prod sans port
+//   'http://51.38.186.158:3003',
+// ];
 
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Non autorisé par CORS'));
+//     }
+//   },
+//   credentials: true,
+// }));
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Non autorisé par CORS'));
-    }
-  },
+  origin: true, // Autorise toutes origines
   credentials: true,
 }));
+
 
 app.use(express.json());
 
