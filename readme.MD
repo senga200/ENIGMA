@@ -14,7 +14,9 @@ Nous pouvons aussi créer un compte, afin de conserver les énigmes préférées
 - L'agent qui fourni tout ceci est créé par Flowise avec un LLM Mistral, qui lui aussi est containerisé. 
 ## Mis en prod sur mon VPS avec PM2 +nginx
 
-![Agent](https://github.com/senga200/ENIGMA/blob/main/agent.png)
+screenshot de l'agent Flowise : 
+
+<img src="https://raw.githubusercontent.com/senga200/ENIGMA/main/agent.png" alt="Agent" style="width:300px; height:auto;" />
 
 
 Quick start 
