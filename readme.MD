@@ -1,5 +1,5 @@
 
-# ENIGMA
+![Titre](client/src/assets/titre.png)
 
 🔮 http://vps-1b9fc044.vps.ovh.net:3003/ 🔮 
 
@@ -13,6 +13,8 @@ Nous pouvons aussi créer un compte, afin de conserver les énigmes préférées
 - Pour me faciliter la tâche, j’ai choisi de travailler avec l’ORM Sequelize (packages : sequelize, pg, pg-hstore).
 - L'agent qui fourni tout ceci est créé par Flowise avec un LLM Mistral, qui lui aussi est containerisé. 
 ## Mis en prod sur mon VPS avec PM2 +nginx
+
+[agent](https://github.com/senga200/ENIGMA/blob/main/agent.png)
 
 
 Quick start 
