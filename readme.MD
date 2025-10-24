@@ -7,15 +7,15 @@
 ENIGMA est une application web full‑stack qui permets de découvrir tous les jours une énigme différente et ce, grace à un agent IA.
 Nous pouvons aussi créer un compte, afin de conserver les énigmes préférées.
 
-Le front est en React
-Le back en express JS
-le tout containerisé avec Docker sur une base de données Postgresql.
-Pour me faciliter la tâche, j’ai choisi de travailler avec l’ORM Sequelize (packages : sequelize, pg, pg-hstore).
-L'agent qui fourni tout ceci est créé par Flowise avec un LLM Mistral.
-Mis en prod avec PM2 +nginx
+- Le front est en React
+- Le back en express JS
+- le tout containerisé avec Docker sur une base de données Postgresql.
+- Pour me faciliter la tâche, j’ai choisi de travailler avec l’ORM Sequelize (packages : sequelize, pg, pg-hstore).
+- L'agent qui fourni tout ceci est créé par Flowise avec un LLM Mistral, qui lui aussi est containerisé. 
+## Mis en prod sur mon VPS avec PM2 +nginx
 
 
-Quick start (dev)
+Quick start 
 ```bash
 # cloner
 git clone https://github.com/senga200/ENIGMA.git
