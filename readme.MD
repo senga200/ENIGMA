@@ -7,9 +7,9 @@
 ENIGMA est une application web full‑stack qui permets de découvrir tous les jours une énigme différente et ce, grace à un agent IA.
 Nous pouvons aussi créer un compte, afin de conserver les énigmes préférées.
 
-<img src="https://raw.githubusercontent.com/senga200/ENIGMA/main/home.gif" alt="home" height:auto;" />
+<img src="https://raw.githubusercontent.com/senga200/ENIGMA/main/home.gif" alt="home" style="height:auto;" />
 
-<img src="https://raw.githubusercontent.com/senga200/ENIGMA/main/enigmaFav.png" alt="favoris" height:auto;" />
+<img src="https://raw.githubusercontent.com/senga200/ENIGMA/main/enigmaFav.png" alt="favoris" style="height:auto;" />
 
 
 - Le front est en React
