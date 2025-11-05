@@ -19,6 +19,7 @@ import routeFavoris from './routes/routeFavoris.js';
 dotenv.config();
 
 const app = express();
+app.set('trust proxy', true); // pour nginx
 // app.use(cookieParser());
 // app.use(cors({
 //   origin: 'http://localhost:5173',
@@ -39,27 +40,27 @@ const __dirname = path.dirname(__filename);
 app.use(cookieParser());
 
 // CORS 
-// const allowedOrigins = [
-//   'http://localhost:5173', // dev
-//   `http://vps-1b9fc044.vps.ovh.net:${port}`, // prod avec port
-//   'http://vps-1b9fc044.vps.ovh.net', // prod sans port
-//   'http://51.38.186.158:3003',
-// ];
+const allowedOrigins = [
+  'http://localhost:5173', // dev
+  `http://vps-1b9fc044.vps.ovh.net:${port}`, // prod avec port
+  'http://vps-1b9fc044.vps.ovh.net', // prod sans port
+  'http://51.38.186.158:3003',
+];
 
-// app.use(cors({
-//   origin: function (origin, callback) {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Non autorisé par CORS'));
-//     }
-//   },
-//   credentials: true,
-// }));
 app.use(cors({
-  origin: true, // Autorise toutes origines
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Non autorisé par CORS'));
+    }
+  },
   credentials: true,
 }));
+// app.use(cors({
+//   origin: true, // Autorise toutes origines
+//   credentials: true,
+// }));
 
 
 app.use(express.json());
@@ -73,7 +74,7 @@ app.use('/favoris', routeFavoris);
 // Fichiers statiques du frontend
 app.use(express.static(path.join(__dirname, 'client/dist')));
 
-// Route catch-all ALTERNATIVE - utiliser un middleware personnalisé
+// Route catch-all ALTERNATIVE - utiliser un middleware ?
 app.use((req, res, next) => {
   // Si c'est une route API qui n'existe pas, renvoyer 404
   if (req.path.startsWith('/enigmes') || 
