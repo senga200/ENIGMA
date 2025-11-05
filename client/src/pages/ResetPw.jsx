@@ -1,5 +1,7 @@
 import{ useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiFetchJson } from '../utils/api';
+ 
 import '../styles/Sign.css';
 
 function ResetPw() {
@@ -13,55 +15,49 @@ function ResetPw() {
     const navigate = useNavigate();
 
 
-    const handleVerifySecret = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
-        try {
-            const response = await fetch('http://localhost:3003/users/verify-secret', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, secretAnswer }),
-            });
-            const data = await response.json();
+  const handleVerifySecret = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setMessage('');
+    try {
+      // renvoie le JSON ou lève une erreur si status != ok
+      await apiFetchJson('/users/verify-secret', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, secretAnswer }),
+      });
 
-            if (response.ok) {
-                setMessage('Réponse correcte. Mot de passe temporaire en cours de génération...');
-                setStep(2); // passer à l’étape suivante
-                handleResetPassword(); // générer automatiquement
-            } else {
-                setError(data.message || 'Réponse incorrecte.');
-            }
-        } catch (err) {
-            setError("Erreur lors de la vérification.");
-        } finally {
-            setLoading(false);
-        }
-    };
+      setMessage('Réponse correcte. Mot de passe temporaire en cours de génération...');
+      setStep(2);
+      await handleResetPassword();
+    } catch (err) {
+      setError(err?.message || 'Erreur lors de la vérification.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handleResetPassword = async () => {
-        try {
-            const response = await fetch('http://localhost:3003/users/reset-password', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
-            });
-            const data = await response.json();
+  const handleResetPassword = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const data = await apiFetchJson('/users/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
 
-            if (response.ok) {
-                setTempPassword(data.tempPassword);
-                setMessage('Mot de passe temporaire généré. Connectez-vous avec ce mot de passe.');
-                console.log('Mot de passe temporaire:', data.tempPassword);
-                setTimeout(() => navigate('/signin'), 30000);
-            
-            } else {
-                setError(data.message || 'Erreur lors de la réinitialisation du mot de passe.');
-            }
-        } catch (err) {
-            setError('Erreur serveur.');
-        }
-    };
-
+      setTempPassword(data.tempPassword);
+      setMessage('Mot de passe temporaire généré. Connectez-vous avec ce mot de passe.');
+      console.log('Mot de passe temporaire:', data.tempPassword);
+      setTimeout(() => navigate('/signin'), 30000);
+    } catch (err) {
+      setError(err?.message || 'Erreur lors de la réinitialisation du mot de passe.');
+    } finally {
+      setLoading(false);
+    }
+  };
     return (
         <div className="sign-container">
             <h2 className="sign-title">Réinitialisation 

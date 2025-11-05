@@ -2,6 +2,14 @@ import { User } from '../models/index.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+    //voir si la co est secure https
+    function detectSecure(req) {
+    // req.secure est true si la requête est en HTTPS directe
+    // si TLS est terminé par un reverse proxy, vérifier x-forwarded-proto
+    return !!(req.secure || (req.headers['x-forwarded-proto'] === 'https'));
+    }
+
+
 export const authUser = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -24,14 +32,22 @@ export const authUser = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: '24h' }
     );
+    // Détecte si la connexion est secure (HTTPS)
+    const isSecure = detectSecure(req);
 
-    // Envoyer le token dans un cookie sécurisé
-    res.cookie('token', token, {
+
+
+    // Options du cookie : sameSite None nécessaire pour cross-site uniquement si HTTPS
+    const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'Strict',
-      maxAge: 24 * 60 * 60 * 1000, // 24h
-    });
+      secure: !!isSecure, // true seulement en HTTPS
+      sameSite: isSecure ? 'None' : 'Lax',
+      maxAge: 24 * 60 * 60 * 1000, 
+      path: '/',
+    };
+
+    // Envoyer le token dans un cookie
+    res.cookie('token', token, cookieOptions);
 console.log('getMe user:', user.toJSON ? user.toJSON() : user);
 
     // Réponse avec infos utilisateur
@@ -75,10 +91,14 @@ export const getMe = async (req, res) => {
 
 
 export const logout = (req, res) => {
+  const isSecure = detectSecure(req);
   res.clearCookie('token', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'Strict',
+    //secure: process.env.NODE_ENV === 'production',
+    //sameSite: 'Strict',
+    secure: !!isSecure,
+    sameSite: isSecure ? 'None' : 'Lax',
+    path: '/',
   });
   res.status(200).json({ message: 'Déconnecté avec succès' });
 };
